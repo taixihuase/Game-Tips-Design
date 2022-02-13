@@ -1,0 +1,8 @@
+﻿唯一ID,名称,类型,等级,最大等级,激活需求,升级需求,基础属性
+id,name,type,level,maxLevel,activeDemand,upgradeDemand,baseAttr
+int,string,int,int,int,string,string,string
+10011,宝马,1,1,2,"[{""type"":""Item"",""value"":""30001_1""}]",,"[{""type"":2005,""value"":100},{""type"":2002,""value"":998}]"
+10012,宝马,1,2,2,,"[{""type"":""Item"",""value"":""30001_2""}]","[{""type"":2005,""value"":200},{""type"":2002,""value"":1998}]"
+10021,AE86,2,1,3,"[{""type"":""Item"",""value"":""30002_1""}]",,"[{""type"":2005,""value"":160},{""type"":3001,""value"":4900}]"
+10022,AE86,2,2,3,,"[{""type"":""Item"",""value"":""30002_2""}]","[{""type"":2005,""value"":260},{""type"":3001,""value"":5900}]"
+10023,AE86,2,3,3,,"[{""type"":""Item"",""value"":""30002_3""}]","[{""type"":2005,""value"":360},{""type"":3001,""value"":6900},{""type"":2002,""value"":998}]"

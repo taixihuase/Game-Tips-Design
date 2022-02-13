@@ -1,0 +1,6 @@
+﻿唯一ID,装备名,部位,等级需求,职业需求,性别需求,属性需求,基础属性,附加属性
+id,name,part,level,job,sex,demand,baseAttr,addAttr
+int,string,int,int,int,int,string,string,string
+10001,屠龙宝刀,1,399,1,1,"[{""type"":1001,""value"":199}]","[{""type"":2001,""value"":999},{""type"":2006,""value"":99}]","[{""type"":3002,""value"":9999}]"
+10002,AK47,1,1000,0,0,"[{""type"":1001,""value"":99},{""type"":1002,""value"":99}]","[{""type"":2001,""value"":777},{""type"":2006,""value"":999},{""type"":3001,""value"":99}]",
+20001,原谅帽,2,188,0,1,"[{""type"":1003,""value"":250}]","[{""type"":2002,""value"":10086}]",

@@ -1,0 +1,17 @@
+﻿唯一ID,名称,展示名称,属性类别,是否百分比
+id,name,displayName,type,isPercentage
+int,string,string,int,bool
+1001,Strength,力量,1,FALSE
+1002,Agility,敏捷,1,FALSE
+1003,Intelligence,智力,1,FALSE
+2001,Attack,攻击力,2,FALSE
+2002,Defense,防御力,2,FALSE
+2003,MaxHP,最大生命值,2,FALSE
+2004,MaxMP,最大魔法值,2,FALSE
+2005,MoveSpeed,移动速度,2,FALSE
+2006,AttackSpeed,攻击速度,2,FALSE
+3001,DodgeRate,闪避率,3,TRUE
+3002,CritRate,暴击率,3,TRUE
+4001,FireResistance,火焰抗性,4,TRUE
+4002,IceResistance,寒冰抗性,4,TRUE
+4003,WindResistance,风暴抗性,4,TRUE

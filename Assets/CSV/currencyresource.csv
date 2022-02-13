@@ -1,0 +1,5 @@
+﻿唯一ID,货币名称,货币类型,道具ID
+id,name,type,itemId
+int,string,string,int
+1,钻石,DIAMOND,70001
+2,金币,GOLD,70002

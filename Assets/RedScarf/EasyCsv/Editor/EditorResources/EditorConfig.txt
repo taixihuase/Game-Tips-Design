@@ -1,0 +1,1 @@
+{"outputPath":"E:/Unity/Game Tips Design/Assets/Scripts/Csv","sourcePath":"E:/Unity/Game Tips Design/Assets/CSV","namespaceStr":"Csv","isClass":true}
