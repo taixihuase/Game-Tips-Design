@@ -15,6 +15,8 @@ namespace Item.View
 
         private List<ItemTipModule> tempModuleList = new List<ItemTipModule>();
 
+        private BaseItemData itemData;
+
         public void AddModule(ItemTipModule module)
         {
             module.SetTipParent(this);
@@ -24,16 +26,19 @@ namespace Item.View
         public void Release()
         {
             IsActive = false;
+            itemData = null;
             ReleaseModules();
         }
 
         private void ReleaseModules()
         {
             tempModuleList.Clear();
+            relayoutStates.Clear();
         }
 
         public void SetData(BaseItemData itemData)
         {
+            this.itemData = itemData;
             IsActive = true;
             InitRelayoutStates();
 
@@ -53,25 +58,41 @@ namespace Item.View
             Finished = 2
         }
 
-        public RectTransform topContextRoot;
-        public RectTransform bottomContextRoot;
-        public ScrollRect scrollRect;
+        [SerializeField]
+        private Image background;
+
+        [SerializeField]
+        private RectTransform topContextRoot;
+
+        [SerializeField]
+        private RectTransform bottomContextRoot;
+
+        [SerializeField]
+        private ScrollRect scrollRect;
 
         private float topRelayoutOffset = 0;
         private float middleRelayoutOffset = 0;
         private float bottomRelayoutOffset = 0;
         private int currentRelayoutIndex = 0;
 
-        private List<RelayoutState> relayoutStates;
+        private const float scrollRectTopSpacing = 4;
+        private const float scrollRectBottomSpacing = 4;
+        private const float maxBackgroundHeight = 500;
+
+        private List<RelayoutState> relayoutStates = new List<RelayoutState>(16);
         private Vector3 tempVec3 = new Vector3(0, 0, 0);
 
         private void InitRelayoutStates()
         {
-            relayoutStates = new List<RelayoutState>(tempModuleList.Count);
             topRelayoutOffset = 0;
             middleRelayoutOffset = 0;
             bottomRelayoutOffset = 0;
             currentRelayoutIndex = 0;
+
+            for (int i = 0; i < tempModuleList.Count; i++)
+            {
+                relayoutStates.Add(RelayoutState.Unready);
+            }
         }
 
         public void CallRelayout(ItemTipModule module)
@@ -90,12 +111,15 @@ namespace Item.View
         {
             if (RelayoutLayer(ModuleLayerType.Top))
             {
+                tempVec3.y -= scrollRectTopSpacing;
                 scrollRect.transform.localPosition = tempVec3;
                 if (RelayoutLayer(ModuleLayerType.Scroll))
                 {
+                    scrollRect.content.anchoredPosition = Vector2.zero;
                     if (RelayoutLayer(ModuleLayerType.Bottom))
                     {
                         AdjustSize();
+                        AdjustPos();
                     }
                 }
             }
@@ -110,6 +134,7 @@ namespace Item.View
             Transform root;
             float offset;
 
+            tempVec3.x = 0;
             if (layer == ModuleLayerType.Top)
             {
                 tempVec3.y = -topRelayoutOffset;
@@ -151,7 +176,7 @@ namespace Item.View
                             tempVec3.y -= moduleSize;
 
                             offset += moduleSize + spacing;
-                            SetLayerOffset(offset, layer);
+                            SetLayerOffset();
 
                             lastModuleType = module.moduleType;
                             lastModuleSubType = module.subModuleType;
@@ -171,7 +196,7 @@ namespace Item.View
 
             return true;
 
-            void SetLayerOffset(float offset, ModuleLayerType layer)
+            void SetLayerOffset()
             {
                 if (layer == ModuleLayerType.Top)
                 {
@@ -190,7 +215,48 @@ namespace Item.View
 
         private void AdjustSize()
         {
-            
+            float totalSize = topRelayoutOffset + scrollRectTopSpacing + middleRelayoutOffset + scrollRectBottomSpacing + bottomRelayoutOffset;
+            if (totalSize <= maxBackgroundHeight)
+            {
+                background.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, totalSize);
+
+                tempVec3.y = -totalSize + bottomRelayoutOffset;
+                bottomContextRoot.transform.localPosition = tempVec3;
+
+                scrollRect.viewport.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, middleRelayoutOffset);
+            }
+            else
+            {
+                background.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, maxBackgroundHeight);
+
+                tempVec3.y = -maxBackgroundHeight + bottomRelayoutOffset;
+                bottomContextRoot.transform.localPosition = tempVec3;
+
+                scrollRect.viewport.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,
+                    maxBackgroundHeight - (topRelayoutOffset + scrollRectTopSpacing + scrollRectBottomSpacing + bottomRelayoutOffset));
+            }
+        }
+
+        private void AdjustPos()
+        {
+            ItemTipData tipData = itemData.tipData;
+            transform.localPosition = tipData.pos;
+
+            background.rectTransform.pivot = tipData.pivot;
+            tempVec3.x = background.rectTransform.rect.width * (tipData.pivot.x - 0.5f);
+            tempVec3.y = background.rectTransform.rect.height * (tipData.pivot.y - 0.5f);
+
+            Vector2 anchor = tipData.anchor;
+            if (tipData.isCompare)
+            {
+                anchor.x = tipData.isCompareLeftPart ? 1 : 0;
+            }
+            background.rectTransform.anchorMin = anchor;
+            background.rectTransform.anchorMax = anchor;
+            tempVec3.x += background.rectTransform.rect.width * (0.5f - anchor.x);
+            tempVec3.y += background.rectTransform.rect.height * (0.5f - anchor.y);
+
+            background.rectTransform.anchoredPosition = tempVec3;
         }
 
         #endregion
