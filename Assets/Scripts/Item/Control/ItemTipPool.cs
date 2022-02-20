@@ -20,7 +20,7 @@ namespace Item.Control
 
         private Transform poolRoot;
 
-        private const string tipPath = "data/ui/window/itemtip/ui_itemtipview";
+        private const string tipPath = "ui/window/itemtip/ui_itemtipview";
         private const int initialTipCount = 3;
         private List<ItemTipView> tipPool = new List<ItemTipView>();
 

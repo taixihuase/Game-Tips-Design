@@ -62,10 +62,10 @@ namespace Item.View
         private Image background;
 
         [SerializeField]
-        private RectTransform topContextRoot;
+        private RectTransform topContentRoot;
 
         [SerializeField]
-        private RectTransform bottomContextRoot;
+        private RectTransform bottomContentRoot;
 
         [SerializeField]
         private ScrollRect scrollRect;
@@ -139,7 +139,7 @@ namespace Item.View
             {
                 tempVec3.y = -topRelayoutOffset;
                 offset = topRelayoutOffset;
-                root = topContextRoot;
+                root = topContentRoot;
             }
             else if (layer == ModuleLayerType.Scroll)
             {
@@ -151,7 +151,7 @@ namespace Item.View
             {
                 tempVec3.y = -bottomRelayoutOffset;
                 offset = bottomRelayoutOffset;
-                root = bottomContextRoot;
+                root = bottomContentRoot;
             }
 
             for (int i = 0; i < tempModuleList.Count; i++)
@@ -221,7 +221,7 @@ namespace Item.View
                 background.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, totalSize);
 
                 tempVec3.y = -totalSize + bottomRelayoutOffset;
-                bottomContextRoot.transform.localPosition = tempVec3;
+                bottomContentRoot.transform.localPosition = tempVec3;
 
                 scrollRect.viewport.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, middleRelayoutOffset);
             }
@@ -230,7 +230,7 @@ namespace Item.View
                 background.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, maxBackgroundHeight);
 
                 tempVec3.y = -maxBackgroundHeight + bottomRelayoutOffset;
-                bottomContextRoot.transform.localPosition = tempVec3;
+                bottomContentRoot.transform.localPosition = tempVec3;
 
                 scrollRect.viewport.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,
                     maxBackgroundHeight - (topRelayoutOffset + scrollRectTopSpacing + scrollRectBottomSpacing + bottomRelayoutOffset));
