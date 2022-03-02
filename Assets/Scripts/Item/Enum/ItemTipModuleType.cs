@@ -13,6 +13,7 @@
         public const int Desc = Effect + 100;
         public const int Price = Desc + 100;
         public const int Button = Price + 100;
+        public const int RightButton = Button + 100;
 
         public class AttrModuleType
         {
@@ -37,7 +38,8 @@
         {
             Top = 0,
             Scroll = 1,
-            Bottom = 2
+            Bottom = 2,
+            Right = 3,
         }
 
         public static bool IsModuleInLayer(int moduleType, ModuleLayerType posType)
@@ -50,6 +52,8 @@
                 case Price:
                 case Button:
                     return posType == ModuleLayerType.Bottom;
+                case RightButton:
+                    return posType == ModuleLayerType.Right;
                 default:
                     return posType == ModuleLayerType.Scroll;
             }

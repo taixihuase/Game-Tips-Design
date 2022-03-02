@@ -496,6 +496,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ui_itemtipview
       objectReference: {fileID: 0}
+    - target: {fileID: 4233794416295497511, guid: 47dcf1499120a9946b14931f8b97de08,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8668762703773440036, guid: 47dcf1499120a9946b14931f8b97de08,
         type: 3}
       propertyPath: m_Pivot.x

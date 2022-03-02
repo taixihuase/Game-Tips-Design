@@ -11,8 +11,18 @@ namespace Item.Model
         public Vector2 pivot = center;
         public bool showMask;
         public bool canCompare;
-        public bool isCompare;
+        private bool _isCompare;
+        public bool isCompare
+        {
+            get { return _isCompare; }
+            set
+            {
+                _isCompare = value;
+                isAdditionalPart = true;
+            }
+        }
         public bool isCompareLeftPart;
+        public bool isAdditionalPart;
         public bool canOperate;
 
         private static Vector2 center = new Vector2(0.5f, 0.5f); 

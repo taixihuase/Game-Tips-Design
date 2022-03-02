@@ -1,6 +1,7 @@
 ﻿using Item.Enum;
 using Item.Model;
 using Item.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -21,7 +22,7 @@ namespace Item.Control
 
         private Dictionary<string, ItemTipType> registedTipTypes = new Dictionary<string, ItemTipType>();
         private Dictionary<ItemTipType, List<int>> registedTipModules = new Dictionary<ItemTipType, List<int>>();
-        private Vector3 firstModuleOffset = Vector3.zero;
+        private ValueTuple<BaseItemData, BaseItemData, BaseItemData> itemDatas;
 
         public ItemTipManager()
         {
@@ -111,10 +112,40 @@ namespace Item.Control
             registedTipModules.Add(tipType, modules.ToList());
         }
 
+        public void OpenTipView(ValueTuple<BaseItemData, BaseItemData, BaseItemData> itemDatas)
+        {
+            OpenTipView(itemDatas.Item1, itemDatas.Item2, itemDatas.Item3);
+        }
+
+        public void OpenTipView(BaseItemData itemData1, BaseItemData itemData2 = null, BaseItemData itemData3 = null)
+        {
+            OpenTipView(itemData1);
+            if (itemData2 != null)
+            {
+                itemData2.tipData.isAdditionalPart = true;
+                OpenTipView(itemData2);
+            }
+            
+            if (itemData3 != null)
+            {
+                itemData3.tipData.isAdditionalPart = true;
+                OpenTipView(itemData3);
+            }
+        }
+
         public void OpenTipView(BaseItemData itemData)
         {
-            ItemTipType tipType = GetTipType(itemData);
+            if (itemData == null)
+            {
+                return;
+            }
 
+            if (!itemData.tipData.isAdditionalPart)
+            {
+                ItemTipPool.Inst().RecycleUsingTips();
+            }
+
+            ItemTipType tipType = GetTipType(itemData);
             ItemTipView tipView = ItemTipPool.Inst().PopTip();
             List<int> modules;
             if (registedTipModules.TryGetValue(tipType, out modules))

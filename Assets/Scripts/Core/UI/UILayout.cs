@@ -24,6 +24,7 @@ namespace Core.UI
         private int itemPrefabPathHash = 0;
 
         private Coroutine createCoroutine = null;
+        private int maxCreateItemNumPerFrame = 20;
 
         private RectTransform rectTransform = null;
 
@@ -50,6 +51,7 @@ namespace Core.UI
             }
 
             onReposition = func;
+            SetMaxCreateItemNumPerFrame();
         }
 
         public void SetOnReposition(OnReposition func)
@@ -62,6 +64,11 @@ namespace Core.UI
         {
             LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
             onReposition?.Invoke();
+        }
+
+        public void SetMaxCreateItemNumPerFrame(int num = 20)
+        {
+            maxCreateItemNumPerFrame = num;
         }
 
         public void SetData(IEnumerable[] datas)
@@ -101,7 +108,7 @@ namespace Core.UI
                     itemList.Add(item);
 
                     i++;
-                    if (i % 5 == 0)
+                    if (i % maxCreateItemNumPerFrame == 0)
                     {
                         yield return new WaitForEndOfFrame();
                     }

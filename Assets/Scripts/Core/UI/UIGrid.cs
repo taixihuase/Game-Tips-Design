@@ -6,52 +6,51 @@ namespace Core.UI
     public class UIGrid : GridLayoutGroup
     {
         private UILayout layout;
-        protected UILayout Layout
+
+        protected override void Awake()
         {
-            get
-            {
-                if (layout == null)
-                {
-                    layout = new UILayout();
-                    layout.SetParent(this, rectTransform);
-                }
-                return layout;
-            }
+            layout = new UILayout();
+            layout.SetParent(this, rectTransform);
         }
 
         public void Init(string itemPath, UILayout.OnReposition onReposition)
         {
-            Layout.Init(itemPath, onReposition);
+            layout.Init(itemPath, onReposition);
         }
 
         public void SetOnReposition(UILayout.OnReposition onReposition)
         {
-            Layout.SetOnReposition(onReposition);
+            layout.SetOnReposition(onReposition);
+        }
+
+        public void SetMaxCreateItemNumPerFrame(int num)
+        {
+            layout.SetMaxCreateItemNumPerFrame(num);
         }
 
         public void Reposition()
         {
-            Layout.Reposition();
+            layout.Reposition();
         }
 
         public void SetData(IEnumerable[] datas)
         {
-            Layout.SetData(datas);
+            layout.SetData(datas);
         }
 
         public void SetData(IList datas)
         {
-            Layout.SetData(datas);
+            layout.SetData(datas);
         }
 
         public void Clear()
         {
-            Layout.Clear();
+            layout.Clear();
         }
 
         public void Destroy()
         {
-            Layout.Destroy();
+            layout.Destroy();
             layout = null;
         }
     }

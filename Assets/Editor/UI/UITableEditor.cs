@@ -2,13 +2,14 @@ using UnityEngine;
 using Core.UI;
 using UnityEditor;
 
-namespace MyEditor.UI
+namespace UIEditor
 {
     [CustomEditor(typeof(UITable), true)]
     [CanEditMultipleObjects]
     public class UITableEditor : Editor
     {
         SerializedProperty m_Vertical;
+        SerializedProperty m_Padding;
         SerializedProperty m_VerticalSpacing;
         SerializedProperty m_HorizontalSpacing;
         SerializedProperty m_MaxRow;
@@ -20,11 +21,14 @@ namespace MyEditor.UI
         SerializedProperty m_ChildScaleHeight;
         SerializedProperty m_ChildForceExpandWidth;
         SerializedProperty m_ChildForceExpandHeight;
+        SerializedProperty m_ReverseArrangement;
+        SerializedProperty m_Tight;
 
 
         protected virtual void OnEnable()
         {
             m_Vertical = serializedObject.FindProperty("m_Vertical");
+            m_Padding = serializedObject.FindProperty("m_Padding");
             m_VerticalSpacing = serializedObject.FindProperty("m_VerticalSpacing");
             m_HorizontalSpacing = serializedObject.FindProperty("m_HorizontalSpacing");
             m_MaxRow = serializedObject.FindProperty("m_MaxRow");
@@ -36,14 +40,20 @@ namespace MyEditor.UI
             m_ChildScaleHeight = serializedObject.FindProperty("m_ChildScaleHeight");
             m_ChildForceExpandWidth = serializedObject.FindProperty("m_ChildForceExpandWidth");
             m_ChildForceExpandHeight = serializedObject.FindProperty("m_ChildForceExpandHeight");
+            m_ReverseArrangement = serializedObject.FindProperty("m_ReverseArrangement");
+            m_Tight = serializedObject.FindProperty("m_Tight");
         }
 
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
             EditorGUILayout.PropertyField(m_Vertical, true);
+            EditorGUILayout.PropertyField(m_Padding, true);
             EditorGUILayout.PropertyField(m_VerticalSpacing, true);
             EditorGUILayout.PropertyField(m_HorizontalSpacing, true);
+            EditorGUILayout.PropertyField(m_ChildAlignment, true);
+            EditorGUILayout.PropertyField(m_ReverseArrangement, true);
+            EditorGUILayout.PropertyField(m_Tight, true);
             if (m_Vertical.boolValue)
             {
                 EditorGUILayout.PropertyField(m_MaxRow, true);
@@ -52,7 +62,6 @@ namespace MyEditor.UI
             {
                 EditorGUILayout.PropertyField(m_MaxColumn, true);
             }
-            EditorGUILayout.PropertyField(m_ChildAlignment, true);
 
             Rect rect = EditorGUILayout.GetControlRect();
             rect = EditorGUI.PrefixLabel(rect, -1, EditorGUIUtility.TrTextContent("Control Child Size"));

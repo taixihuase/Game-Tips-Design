@@ -27,6 +27,8 @@ namespace Item.Control
         private const int initialModuleCount = 3;
         private Dictionary<int, List<ItemTipModule>> modulePool = new Dictionary<int, List<ItemTipModule>>();
         private Dictionary<int, string> modulePrefabPath = new Dictionary<int, string>();
+        private ItemTipView[] usingTips = new ItemTipView[3] { null, null, null };
+
 
         public ItemTipPool()
         {
@@ -43,19 +45,27 @@ namespace Item.Control
 
         public void PushTip(ItemTipView tip)
         {
+            if (tip == null)
+            {
+                return;
+            }
+
             tip.transform.position = Vector3.zero;
             tip.gameObject.SetActive(false);
             tip.Release();
             tipPool.Add(tip);
+            SetTipUsingState(tip, false);
         }
 
         public ItemTipView PopTip()
         {
+            ItemTipView tip;
             if (tipPool.Count > 0)
             {
-                ItemTipView tip = tipPool[tipPool.Count - 1];
+                tip = tipPool[tipPool.Count - 1];
                 tipPool.RemoveAt(tipPool.Count - 1);
                 tip.gameObject.SetActive(true);
+                SetTipUsingState(tip, true);
                 return tip;
             }
 
@@ -64,7 +74,9 @@ namespace Item.Control
             instance.SetActive(true);
             instance.transform.position = Vector3.zero;
             AssetLoader.DestroyGameObjectAsset(go, true);
-            return instance.GetComponent<ItemTipView>();
+            tip = instance.GetComponent<ItemTipView>();
+            SetTipUsingState(tip, true);
+            return tip;
         }
 
         private void PreCreateTips()
@@ -76,6 +88,50 @@ namespace Item.Control
                 PushTip(instance.GetComponent<ItemTipView>());
             }
             AssetLoader.DestroyGameObjectAsset(go, true);
+        }
+
+        private void SetTipUsingState(ItemTipView tip, bool isUsing)
+        {
+            if (isUsing)
+            {
+                for (int i = 0; i < usingTips.Length; i++)
+                {
+                    if (usingTips[i] == null)
+                    {
+                        usingTips[i] = tip;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < usingTips.Length; i++)
+                {
+                    if (usingTips[i] == tip)
+                    {
+                        usingTips[i] = null;
+                        break;
+                    }
+                }
+            }
+        }
+
+        public ItemTipView GetUsingTip(uint index = 0)
+        {
+            if (index < usingTips.Length)
+            {
+                return usingTips[index];
+            }
+
+            return null;
+        }
+
+        public void RecycleUsingTips()
+        {
+            for (int i = 0; i < usingTips.Length; i++)
+            {
+                PushTip(usingTips[i]);
+            }
         }
 
         #endregion
@@ -94,6 +150,7 @@ namespace Item.Control
             AddModulePath(ItemTipModuleType.Price, "data/ui/window/itemtip/ui_itemtipview_pricemodule");
             AddModulePath(ItemTipModuleType.Item, "data/ui/window/itemtip/ui_itemtipview_itemmodule");
             AddModulePath(ItemTipModuleType.Button, "data/ui/window/itemtip/ui_itemtipview_buttonmodule");
+            AddModulePath(ItemTipModuleType.RightButton, "data/ui/window/itemtip/ui_itemtipview_rightbuttonmodule");
         }
 
         private void AddModulePath(int moduleType, string path)

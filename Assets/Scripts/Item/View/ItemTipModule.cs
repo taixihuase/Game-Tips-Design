@@ -19,6 +19,19 @@ public abstract class ItemTipModule : MonoBehaviour
 
     private ItemTipView parentView;
 
+    private RectTransform _rectTransform;
+    public RectTransform rectTransform
+    {
+        get
+        {
+            if (_rectTransform == null)
+            {
+                _rectTransform = GetComponent<RectTransform>();
+            }
+            return _rectTransform;
+        }
+    }
+
     public void SetTipParent(ItemTipView view)
     {
         parentView = view;
