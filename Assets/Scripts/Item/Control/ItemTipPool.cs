@@ -20,7 +20,7 @@ namespace Item.Control
 
         private Transform poolRoot;
 
-        private const string tipPath = "ui/window/itemtip/ui_itemtipview";
+        private const string tipPath = "ui/window/itemtip/ui_itemtipview.prefab";
         private const int initialTipCount = 3;
         private List<ItemTipView> tipPool = new List<ItemTipView>();
 
@@ -73,7 +73,6 @@ namespace Item.Control
             GameObject instance = GameObject.Instantiate(go);
             instance.SetActive(true);
             instance.transform.position = Vector3.zero;
-            AssetLoader.DestroyGameObjectAsset(go, true);
             tip = instance.GetComponent<ItemTipView>();
             SetTipUsingState(tip, true);
             return tip;
@@ -87,7 +86,6 @@ namespace Item.Control
                 GameObject instance = GameObject.Instantiate(go);
                 PushTip(instance.GetComponent<ItemTipView>());
             }
-            AssetLoader.DestroyGameObjectAsset(go, true);
         }
 
         private void SetTipUsingState(ItemTipView tip, bool isUsing)
@@ -140,17 +138,17 @@ namespace Item.Control
 
         private void AddModulesPath()
         {
-            AddModulePath(ItemTipModuleType.Header, "data/ui/window/itemtip/ui_itemtipview_headermodule");
-            AddModulePath(ItemTipModuleType.BaseInfo, "data/ui/window/itemtip/ui_itemtipview_baseinfomodule");
-            AddModulePath(ItemTipModuleType.Demand, "data/ui/window/itemtip/ui_itemtipview_demandmodule");
-            AddModulePath(ItemTipModuleType.Attr, "data/ui/window/itemtip/ui_itemtipview_attrmodule");
-            AddModulePath(ItemTipModuleType.Suit, "data/ui/window/itemtip/ui_itemtipview_suitmodule");
-            AddModulePath(ItemTipModuleType.Skill, "data/ui/window/itemtip/ui_itemtipview_skillmodule");
-            AddModulePath(ItemTipModuleType.Desc, "data/ui/window/itemtip/ui_itemtipview_descmodule");
-            AddModulePath(ItemTipModuleType.Price, "data/ui/window/itemtip/ui_itemtipview_pricemodule");
-            AddModulePath(ItemTipModuleType.Item, "data/ui/window/itemtip/ui_itemtipview_itemmodule");
-            AddModulePath(ItemTipModuleType.Button, "data/ui/window/itemtip/ui_itemtipview_buttonmodule");
-            AddModulePath(ItemTipModuleType.RightButton, "data/ui/window/itemtip/ui_itemtipview_rightbuttonmodule");
+            AddModulePath(ItemTipModuleType.Header, "ui/window/itemtip/ui_itemtipview_headermodule.prefab");
+            //AddModulePath(ItemTipModuleType.BaseInfo, "ui/window/itemtip/ui_itemtipview_baseinfomodule.prefab");
+            //AddModulePath(ItemTipModuleType.Demand, "ui/window/itemtip/ui_itemtipview_demandmodule.prefab");
+            //AddModulePath(ItemTipModuleType.Attr, "ui/window/itemtip/ui_itemtipview_attrmodule.prefab");
+            //AddModulePath(ItemTipModuleType.Suit, "ui/window/itemtip/ui_itemtipview_suitmodule.prefab");
+            //AddModulePath(ItemTipModuleType.Skill, "ui/window/itemtip/ui_itemtipview_skillmodule.prefab");
+            //AddModulePath(ItemTipModuleType.Desc, "ui/window/itemtip/ui_itemtipview_descmodule.prefab");
+            //AddModulePath(ItemTipModuleType.Price, "ui/window/itemtip/ui_itemtipview_pricemodule.prefab");
+            //AddModulePath(ItemTipModuleType.Item, "ui/window/itemtip/ui_itemtipview_itemmodule.prefab");
+            //AddModulePath(ItemTipModuleType.Button, "ui/window/itemtip/ui_itemtipview_buttonmodule.prefab");
+            //AddModulePath(ItemTipModuleType.RightButton, "ui/window/itemtip/ui_itemtipview_rightbuttonmodule.prefab");
         }
 
         private void AddModulePath(int moduleType, string path)
@@ -200,7 +198,6 @@ namespace Item.Control
                 GameObject go = AssetLoader.LoadAsset<GameObject>(path);
                 GameObject instance = GameObject.Instantiate(go);
                 instance.transform.position = Vector3.zero;
-                AssetLoader.DestroyGameObjectAsset(go);
                 return instance.GetComponent<ItemTipModule>();
             }
 
@@ -217,7 +214,6 @@ namespace Item.Control
                     GameObject instance = GameObject.Instantiate(go);
                     PushModule(kv.Key, instance.GetComponent<ItemTipModule>());
                 }
-                AssetLoader.DestroyGameObjectAsset(go);
             }
             Resources.UnloadUnusedAssets();
         }

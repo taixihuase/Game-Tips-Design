@@ -22,7 +22,7 @@ namespace Item.Control
 
         private Dictionary<string, ItemTipType> registedTipTypes = new Dictionary<string, ItemTipType>();
         private Dictionary<ItemTipType, List<int>> registedTipModules = new Dictionary<ItemTipType, List<int>>();
-        private ValueTuple<BaseItemData, BaseItemData, BaseItemData> itemDatas;
+        private (BaseItemData it1, BaseItemData it2, BaseItemData it3) itemDatas;
 
         public ItemTipManager()
         {
@@ -47,64 +47,82 @@ namespace Item.Control
 
         private void RegistTipModules()
         {
+            //RegistModules(ItemTipType.Item,
+            //    ItemTipModuleType.Header,
+            //    ItemTipModuleType.BaseInfo,
+            //    ItemTipModuleType.Demand,
+            //    ItemTipModuleType.Effect,
+            //    ItemTipModuleType.Desc,
+            //    ItemTipModuleType.Price,
+            //    ItemTipModuleType.Button);
+
+            //RegistModules(ItemTipType.Equip,
+            //    ItemTipModuleType.Header,
+            //    ItemTipModuleType.BaseInfo,
+            //    ItemTipModuleType.Demand,
+            //    ItemTipModuleType.Attr + ItemTipModuleType.AttrModuleType.Base,
+            //    ItemTipModuleType.Attr + ItemTipModuleType.AttrModuleType.Addition,
+            //    ItemTipModuleType.Suit + ItemTipModuleType.SuitModuleType.Base,
+            //    ItemTipModuleType.Suit + ItemTipModuleType.SuitModuleType.Forge,
+            //    ItemTipModuleType.Suit + ItemTipModuleType.SuitModuleType.Element,
+            //    ItemTipModuleType.Desc,
+            //    ItemTipModuleType.Price,
+            //    ItemTipModuleType.Button);
+
+            //RegistModules(ItemTipType.Skill,
+            //    ItemTipModuleType.Header,
+            //    ItemTipModuleType.BaseInfo,
+            //    ItemTipModuleType.Demand,
+            //    ItemTipModuleType.Skill,
+            //    ItemTipModuleType.Effect,
+            //    ItemTipModuleType.Desc,
+            //    ItemTipModuleType.Price,
+            //    ItemTipModuleType.Button);
+
+            //RegistModules(ItemTipType.Mount,
+            //    ItemTipModuleType.Header,
+            //    ItemTipModuleType.BaseInfo,
+            //    ItemTipModuleType.Demand,
+            //    ItemTipModuleType.Skill,
+            //    ItemTipModuleType.Effect,
+            //    ItemTipModuleType.Desc,
+            //    ItemTipModuleType.Price,
+            //    ItemTipModuleType.Button);
+
+            //RegistModules(ItemTipType.Box,
+            //    ItemTipModuleType.Header,
+            //    ItemTipModuleType.BaseInfo,
+            //    ItemTipModuleType.Demand,
+            //    ItemTipModuleType.Item,
+            //    ItemTipModuleType.Effect,
+            //    ItemTipModuleType.Desc,
+            //    ItemTipModuleType.Price,
+            //    ItemTipModuleType.Button);
+
+            //RegistModules(ItemTipType.Currency,
+            //    ItemTipModuleType.Header,
+            //    ItemTipModuleType.BaseInfo,
+            //    ItemTipModuleType.Effect,
+            //    ItemTipModuleType.Desc,
+            //    ItemTipModuleType.Button);
+
             RegistModules(ItemTipType.Item,
-                ItemTipModuleType.Header,
-                ItemTipModuleType.BaseInfo,
-                ItemTipModuleType.Demand,
-                ItemTipModuleType.Effect,
-                ItemTipModuleType.Desc,
-                ItemTipModuleType.Price,
-                ItemTipModuleType.Button);
+                ItemTipModuleType.Header);
 
             RegistModules(ItemTipType.Equip,
-                ItemTipModuleType.Header,
-                ItemTipModuleType.BaseInfo,
-                ItemTipModuleType.Demand,
-                ItemTipModuleType.Attr + ItemTipModuleType.AttrModuleType.Base,
-                ItemTipModuleType.Attr + ItemTipModuleType.AttrModuleType.Addition,
-                ItemTipModuleType.Suit + ItemTipModuleType.SuitModuleType.Base,
-                ItemTipModuleType.Suit + ItemTipModuleType.SuitModuleType.Forge,
-                ItemTipModuleType.Suit + ItemTipModuleType.SuitModuleType.Element,
-                ItemTipModuleType.Desc,
-                ItemTipModuleType.Price,
-                ItemTipModuleType.Button);
+                ItemTipModuleType.Header);
 
             RegistModules(ItemTipType.Skill,
-                ItemTipModuleType.Header,
-                ItemTipModuleType.BaseInfo,
-                ItemTipModuleType.Demand,
-                ItemTipModuleType.Skill,
-                ItemTipModuleType.Effect,
-                ItemTipModuleType.Desc,
-                ItemTipModuleType.Price,
-                ItemTipModuleType.Button);
+                ItemTipModuleType.Header);
 
             RegistModules(ItemTipType.Mount,
-                ItemTipModuleType.Header,
-                ItemTipModuleType.BaseInfo,
-                ItemTipModuleType.Demand,
-                ItemTipModuleType.Skill,
-                ItemTipModuleType.Effect,
-                ItemTipModuleType.Desc,
-                ItemTipModuleType.Price,
-                ItemTipModuleType.Button);
+                ItemTipModuleType.Header);
 
             RegistModules(ItemTipType.Box,
-                ItemTipModuleType.Header,
-                ItemTipModuleType.BaseInfo,
-                ItemTipModuleType.Demand,
-                ItemTipModuleType.Item,
-                ItemTipModuleType.Effect,
-                ItemTipModuleType.Desc,
-                ItemTipModuleType.Price,
-                ItemTipModuleType.Button);
+                ItemTipModuleType.Header);
 
             RegistModules(ItemTipType.Currency,
-                ItemTipModuleType.Header,
-                ItemTipModuleType.BaseInfo,
-                ItemTipModuleType.Effect,
-                ItemTipModuleType.Desc,
-                ItemTipModuleType.Button);
+                ItemTipModuleType.Header);
         }
 
         private void RegistModules(ItemTipType tipType, params int[] modules)
@@ -112,9 +130,10 @@ namespace Item.Control
             registedTipModules.Add(tipType, modules.ToList());
         }
 
-        public void OpenTipView(ValueTuple<BaseItemData, BaseItemData, BaseItemData> itemDatas)
+        public void OpenTipView((BaseItemData it1, BaseItemData it2, BaseItemData it3) itemDatas)
         {
-            OpenTipView(itemDatas.Item1, itemDatas.Item2, itemDatas.Item3);
+            this.itemDatas = itemDatas;
+            OpenTipView(itemDatas.it1, itemDatas.it2, itemDatas.it3);
         }
 
         public void OpenTipView(BaseItemData itemData1, BaseItemData itemData2 = null, BaseItemData itemData3 = null)

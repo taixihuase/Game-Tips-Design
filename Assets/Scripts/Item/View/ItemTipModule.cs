@@ -1,6 +1,7 @@
 using Item.Model;
 using Item.View;
 using UnityEngine;
+using Core.UI;
 
 public abstract class ItemTipModule : MonoBehaviour
 {
@@ -18,6 +19,11 @@ public abstract class ItemTipModule : MonoBehaviour
     }
 
     private ItemTipView parentView;
+
+    public BaseItemData itemData
+    {
+        get; private set;
+    }
 
     private RectTransform _rectTransform;
     public RectTransform rectTransform
@@ -37,7 +43,10 @@ public abstract class ItemTipModule : MonoBehaviour
         parentView = view;
     }
 
-    public abstract void SetData(BaseItemData itemData);
+    public virtual void SetData(BaseItemData itemData)
+    {
+        this.itemData = itemData;
+    }
 
     protected void OnSetDataFinished()
     {
@@ -55,7 +64,11 @@ public abstract class ItemTipModule : MonoBehaviour
     }
 
     //模块内部自行排版和偏移
-    public abstract float Relayout();
+    public virtual float Relayout()
+    {
+        var bound = rectTransform.CalculateWorldBounds();
+        return bound.size.y;
+    }
 
     public abstract bool IsValid();
 }

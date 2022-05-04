@@ -40,6 +40,8 @@ namespace Core.UI
         {
             itemPrefabPath = itemPath;
             itemPrefabPathHash = itemPath.GetHashCode();
+            Items = new List<UILayoutItem>();
+
             if (!itemPool.ContainsKey(itemPrefabPathHash))
             {
                 itemPool.Add(itemPrefabPathHash, new List<UILayoutItem>());
@@ -114,7 +116,6 @@ namespace Core.UI
                     }
                 }
 
-                AssetLoader.DestroyGameObjectAsset(asset);
                 PopItems();
             }
 

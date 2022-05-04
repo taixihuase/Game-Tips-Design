@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Core.UI;
 using static Item.Enum.ItemTipModuleType;
+using Item.Control;
 
 namespace Item.View
 {
@@ -33,6 +34,12 @@ namespace Item.View
 
         private void ReleaseModules()
         {
+            for (int i = 0; i < tempModuleList.Count; i++)
+            {
+                ItemTipModule module = tempModuleList[i];
+                ItemTipPool.Inst().PushModule(module.moduleType, module);
+            }
+
             tempModuleList.Clear();
             relayoutStates.Clear();
         }
@@ -59,6 +66,8 @@ namespace Item.View
             Finished = 2
         }
 
+        [SerializeField]
+        private RectTransform root;
         [SerializeField]
         private Image background;
         [SerializeField]
@@ -102,6 +111,15 @@ namespace Item.View
 
         public void CallRelayout(ItemTipModule module)
         {
+            for (int i = 0; i < tempModuleList.Count; i++)
+            {
+                if (tempModuleList[i] == module)
+                {
+                    relayoutStates[i] = RelayoutState.Ready;
+                    break;
+                }
+            }
+
             if (IsActive && tempModuleList.Count > currentRelayoutIndex)
             {
                 ItemTipModule currentModule = tempModuleList[currentRelayoutIndex];
@@ -114,19 +132,23 @@ namespace Item.View
 
         private void Relayout()
         {
-            if (RelayoutLayer(ModuleLayerType.Top))
+            if (RelayoutLayer(ModuleLayerType.Top) >= 0)
             {
                 tempVec3.y -= scrollRectTopSpacing;
                 scrollRect.transform.localPosition = tempVec3;
                 scrollRect.content.anchoredPosition = Vector2.zero;
-                if (RelayoutLayer(ModuleLayerType.Scroll))
+
+                int middleLayerModuleCnt = 0;
+                if ((middleLayerModuleCnt = RelayoutLayer(ModuleLayerType.Scroll)) >= 0)
                 {
                     scrollRect.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
-                    var bounds = scrollRect.content.CalculateRelativeBounds();
+                    var bounds = scrollRect.content.CalculateWorldBounds();
                     scrollRect.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, bounds.size.y);
-                    if (RelayoutLayer(ModuleLayerType.Bottom))
+
+                    int bottomLayerModuleCnt = 0;
+                    if ((bottomLayerModuleCnt = RelayoutLayer(ModuleLayerType.Bottom)) >= 0)
                     {
-                        AdjustSize();
+                        AdjustSize(middleLayerModuleCnt, bottomLayerModuleCnt);
                         AdjustPos();
 
                         RelayoutLayer(ModuleLayerType.Right);
@@ -135,7 +157,7 @@ namespace Item.View
             }
         }
 
-        private bool RelayoutLayer(ModuleLayerType layer)
+        private int RelayoutLayer(ModuleLayerType layer)
         {
             int lastModuleType = 0;
             int lastModuleSubType = 0;
@@ -175,6 +197,7 @@ namespace Item.View
                 root = rightContentRoot;
             }
 
+            int finishedModuleCount = 0;
             for (int i = 0; i < tempModuleList.Count; i++)
             {
                 ItemTipModule module = tempModuleList[i];
@@ -182,12 +205,14 @@ namespace Item.View
                 {
                     if (relayoutStates[i] == RelayoutState.Unready)
                     {
-                        return false;
+                        //当前层仍未刷新完毕，不统计该层模块数量
+                        return -1;
                     }
                     else if (relayoutStates[i] == RelayoutState.Ready)
                     {
                         if (module.IsValid())
                         {
+                            module.gameObject.SetActive(true);
                             module.transform.parent = root;
 
                             spacing = module.GetModuleSpacing(lastModuleType, lastModuleSubType);
@@ -206,23 +231,34 @@ namespace Item.View
                             relayoutStates[i] = RelayoutState.Finished;
 
                             currentRelayoutIndex++;
+                            finishedModuleCount++;
                         }
                     }
                     else
                     {
                         lastModuleType = module.moduleType;
                         lastModuleSubType = module.subModuleType;
+                        finishedModuleCount++;
                     }
                 }
             }
 
 
-            return true;
+            return finishedModuleCount;
         }
 
-        private void AdjustSize()
+        private void AdjustSize(int middleCnt, int bottomCnt)
         {
-            float totalSize = topRelayoutOffset + scrollRectTopSpacing + middleRelayoutOffset + scrollRectBottomSpacing + bottomRelayoutOffset;
+            float totalSize = topRelayoutOffset;
+            if (middleCnt > 0)
+            {
+                totalSize += scrollRectTopSpacing + middleRelayoutOffset;
+            }
+            if (bottomCnt > 0)
+            {
+                totalSize += scrollRectBottomSpacing + bottomRelayoutOffset;
+            }
+            
             if (totalSize <= maxBackgroundHeight)
             {
                 background.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, totalSize);
@@ -247,7 +283,7 @@ namespace Item.View
         private void AdjustPos()
         {
             ItemTipData tipData = itemData.tipData;
-            transform.localPosition = tipData.pos;
+            root.localPosition = tipData.pos;
 
             background.rectTransform.pivot = tipData.pivot;
             tempVec3.x = background.rectTransform.rect.width * (tipData.pivot.x - 0.5f);
