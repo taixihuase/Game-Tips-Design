@@ -6,7 +6,7 @@ namespace Core.UI
     {
         public static void SetParent(Transform child, Transform parent, bool reset = false)
         {
-            child.parent = parent;
+            child.SetParent(parent);
             if (reset)
             {
                 child.localPosition = Vector3.zero;

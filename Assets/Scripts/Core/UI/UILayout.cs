@@ -105,7 +105,7 @@ namespace Core.UI
                 while(i < count)
                 {
                     GameObject go = GameObject.Instantiate(asset);
-                    go.transform.parent = poolRootObj.transform;
+                    UIUtils.SetParent(go.transform, poolRootObj.transform, true);
                     UILayoutItem item = go.GetComponent<UILayoutItem>();
                     itemList.Add(item);
 

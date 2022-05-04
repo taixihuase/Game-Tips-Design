@@ -213,7 +213,7 @@ namespace Item.View
                         if (module.IsValid())
                         {
                             module.gameObject.SetActive(true);
-                            module.transform.parent = root;
+                            UIUtils.SetParent(module.transform, root, true);
 
                             spacing = module.GetModuleSpacing(lastModuleType, lastModuleSubType);
                             tempVec3.y += sign * spacing;

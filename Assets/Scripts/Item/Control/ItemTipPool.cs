@@ -1,4 +1,5 @@
 ﻿using Core;
+using Core.UI;
 using Item.Enum;
 using Item.View;
 using System.Collections.Generic;
@@ -158,7 +159,7 @@ namespace Item.Control
         
         public void PushModule(int moduleType, ItemTipModule module)
         {
-            module.transform.parent = poolRoot;
+            UIUtils.SetParent(module.transform, poolRoot, true);
             module.transform.position = Vector3.zero;
             module.gameObject.SetActive(false);
             List<ItemTipModule> moduleList;
