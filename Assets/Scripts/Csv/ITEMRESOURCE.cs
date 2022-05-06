@@ -1,6 +1,7 @@
-namespace Csv
-{
-    public class ITEMRESOURCE{
+using System;
+
+namespace Csv{
+	public class ITEMRESOURCE{
 		//唯一ID
 		public int id;
 		//名称
