@@ -210,7 +210,7 @@ namespace Item.View
                     }
                     else if (relayoutStates[i] == RelayoutState.Ready)
                     {
-                        if (module.IsValid())
+                        if (module.IsValid)
                         {
                             module.gameObject.SetActive(true);
                             UIUtils.SetParent(module.transform, root, true);

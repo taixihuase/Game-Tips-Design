@@ -10,7 +10,7 @@ namespace Csv{
 		public string displayName;
 		//属性类别
 		public int type;
-		//是否百分比
-		public bool isPercentage;
+		//是否万分比
+		public bool isWPercentage;
 	}
 }

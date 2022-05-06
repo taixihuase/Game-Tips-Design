@@ -25,13 +25,13 @@ namespace JsonData
         public string type;
         public string value;
         public string subType;
-        public int subValue;
+        public long subValue;
 
         private const char splitChar = '_';
 
-        private const string Item = "Item";
-        private const string Skill = "Skill";
-        private const string Currency = "Currency";
+        public const string Item = "Item";
+        public const string Skill = "Skill";
+        public const string Currency = "Currency";
 
         public void Parse()
         {
@@ -39,7 +39,7 @@ namespace JsonData
             {
                 var strs = value.Split(splitChar);
                 subType = strs[0];
-                subValue = Convert.ToInt32(strs[1]);
+                subValue = Convert.ToInt64(strs[1]);
             }
         }
     }

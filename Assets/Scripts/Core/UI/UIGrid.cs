@@ -43,6 +43,16 @@ namespace Core.UI
             layout.SetData(datas);
         }
 
+        public IList GetData()
+        {
+            return layout.ItemDatas;
+        }
+
+        public IList GetItems()
+        {
+            return layout.Items;
+        }
+
         public void Clear()
         {
             layout.Clear();

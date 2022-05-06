@@ -16,7 +16,17 @@ namespace Item.Model
         public ItemTipData tipData;
         public ITEMRESOURCEEx itemRes;
 
+        public BaseItemData()
+        {
+
+        }
+
         public BaseItemData(AbstractItem absItem)
+        {
+            SetData(absItem);
+        }
+
+        public void SetData(AbstractItem absItem)
         {
             serverData = absItem;
 
@@ -25,7 +35,12 @@ namespace Item.Model
 
         public BaseItemData(int id, long count)
         {
-            itemId = id;
+            SetData(id, count);
+        }
+
+        public void SetData(int id, long count)
+        {
+            this.itemId = id;
             num = count;
 
             Analyze();
@@ -33,7 +48,12 @@ namespace Item.Model
 
         public BaseItemData(string currency, long count)
         {
-            currencyType = currency;
+            SetData(currency, count);
+        }
+
+        public void SetData(string currency, long count)
+        {
+            this.currencyType = currency;
             num = count;
 
             Analyze();

@@ -1,7 +1,6 @@
-using System;
-
-namespace Csv{
-	public class ITEMRESOURCE{
+namespace Csv
+{
+    public class ITEMRESOURCE{
 		//唯一ID
 		public int id;
 		//名称
@@ -30,5 +29,7 @@ namespace Csv{
 		public bool batch;
 		//使用效果
 		public string effect;
+		//效果描述
+		public string effectDesc;
 	}
 }

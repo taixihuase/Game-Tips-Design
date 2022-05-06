@@ -13,6 +13,7 @@ namespace Item.Model
         public Vector2 pivot = center;
         public bool showMask;
         public bool canCompare;
+
         private bool _isCompare;
         public bool isCompare
         {
@@ -23,7 +24,21 @@ namespace Item.Model
                 isAdditionalPart = true;
             }
         }
-        public bool isCompareLeftPart;
+
+        private bool _isCompareLeftPart;
+        public bool isCompareLeftPart
+        {
+            get { return _isCompareLeftPart; }
+            set
+            {
+                _isCompareLeftPart = value;
+                if (value)
+                {
+                    isCompare = true;
+                }
+            }
+        }
+
         public bool isAdditionalPart;
         public bool canOperate;
 

@@ -6,8 +6,7 @@
         public const int BaseInfo = Header + 100;
         public const int Demand = BaseInfo + 100;
         public const int Attr = Demand + 100;
-        public const int Suit = Attr + 100;
-        public const int Skill = Suit + 100;
+        public const int Skill = Attr + 100;
         public const int Item = Skill + 100;
         public const int Effect = Item + 100;
         public const int Desc = Effect + 100;
@@ -19,13 +18,6 @@
         {
             public const int Base = 1;
             public const int Addition = Base + 1;
-        }
-
-        public class SuitModuleType
-        {
-            public const int Base = 1;
-            public const int Forge = Base + 1;
-            public const int Element = Forge + 1;
         }
 
         public class ItemModuleType

@@ -5,12 +5,9 @@ using Core.UI;
 
 public abstract class ItemTipModule : MonoBehaviour
 {
-    public virtual int moduleType
+    public abstract int moduleType
     {
-        get
-        {
-            return 0;
-        }
+        get;
     }
 
     public int subModuleType
@@ -50,7 +47,7 @@ public abstract class ItemTipModule : MonoBehaviour
 
     protected void OnSetDataFinished()
     {
-        parentView.CallRelayout(this);
+        parentView?.CallRelayout(this);
     }
 
     public virtual float GetModuleSpacing(int lastModuleType, int lastModuleSubType)
@@ -70,5 +67,15 @@ public abstract class ItemTipModule : MonoBehaviour
         return bound.size.y;
     }
 
-    public abstract bool IsValid();
+    public virtual bool IsValid
+    {
+        get; protected set;
+    }
+
+    public void Recycle()
+    {
+        IsValid = false;
+        itemData = null;
+        parentView = null;
+    }
 }

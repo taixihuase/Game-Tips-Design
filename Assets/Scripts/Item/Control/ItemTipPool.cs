@@ -161,6 +161,7 @@ namespace Item.Control
         {
             UIUtils.SetParent(module.transform, poolRoot, true);
             module.transform.position = Vector3.zero;
+            module.Recycle();
             module.gameObject.SetActive(false);
             List<ItemTipModule> moduleList;
             if (modulePool.TryGetValue(moduleType, out moduleList))
