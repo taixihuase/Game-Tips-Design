@@ -6,14 +6,16 @@ namespace Item.Model
     public class ItemTipData
     {
         public ItemTipType tipType;
+        //tip根节点的坐标
         public Vector2 pos = Vector2.zero;
         //tip上anchor所代表的点固定处在pos坐标
         public Vector2 anchor = center;
         //tip背景拉伸时pivot所代表的点固定不动
         public Vector2 pivot = center;
+        //是否显示遮罩
         public bool showMask;
-        public bool canCompare;
 
+        //标识是不是对比tip
         private bool _isCompare;
         public bool isCompare
         {
@@ -21,10 +23,20 @@ namespace Item.Model
             set
             {
                 _isCompare = value;
-                isAdditionalPart = true;
+                if (value)
+                {
+                    isAdditionalPart = true;
+                    canOperate = false;
+                }
+                else
+                {
+                    isCompareLeftPart = false;
+                    compareIndex = 0;
+                }
             }
         }
 
+        //标识对比tip是否在左边
         private bool _isCompareLeftPart;
         public bool isCompareLeftPart
         {
@@ -39,7 +51,26 @@ namespace Item.Model
             }
         }
 
-        public bool isAdditionalPart;
+        //标识第一个对比tip和第二个对比tip
+        public int compareIndex;
+
+        //标识是否同时显示的tip
+        private bool _isAdditionalPart;
+        public bool isAdditionalPart
+        {
+            get { return _isAdditionalPart; }
+            set
+            {
+                _isAdditionalPart = value;
+                if (value)
+                {
+                    //附加tip不加遮罩，遮罩由原始tip决定
+                    showMask = false;
+                }
+            }
+        }
+
+        //标识是否有操作按钮
         public bool canOperate;
 
         private static Vector2 center = new Vector2(0.5f, 0.5f); 

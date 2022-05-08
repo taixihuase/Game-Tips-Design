@@ -290,14 +290,24 @@ namespace Item.View
             tempVec3.y = background.rectTransform.rect.height * (tipData.pivot.y - 0.5f);
 
             Vector2 anchor = tipData.anchor;
+            float bgWidth = background.rectTransform.rect.width;
+            float bgHeight = background.rectTransform.rect.height;
+
             if (tipData.isCompare)
             {
+                //处理第一个对比tip
                 anchor.x = tipData.isCompareLeftPart ? 1 : 0;
             }
             background.rectTransform.anchorMin = anchor;
             background.rectTransform.anchorMax = anchor;
-            tempVec3.x += background.rectTransform.rect.width * (0.5f - anchor.x);
-            tempVec3.y += background.rectTransform.rect.height * (0.5f - anchor.y);
+            tempVec3.x += bgWidth * (0.5f - anchor.x);
+            tempVec3.y += bgHeight * (0.5f - anchor.y);
+
+            if (tipData.compareIndex == 2)
+            {
+                //由第一个对比tip基础上再偏移一次
+                tempVec3.x += tipData.isCompareLeftPart ? bgWidth * -1 : bgWidth;
+            }
 
             background.rectTransform.anchoredPosition = tempVec3;
         }

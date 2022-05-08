@@ -68,11 +68,10 @@ namespace Item.View
 
         protected virtual (BaseItemData, BaseItemData, BaseItemData) GenerateDatas(BaseItemData itemData)
         {
-            CreateTestTipData(itemData);
-            return (itemData, null, null);
+            return CreateTestTipData(itemData);
         }
 
-        private void CreateTestTipData(BaseItemData itemData)
+        private (BaseItemData, BaseItemData, BaseItemData) CreateTestTipData(BaseItemData itemData)
         {
             var tipData = new ItemTipData();
             itemData.tipData = tipData;
@@ -81,6 +80,24 @@ namespace Item.View
             tipData.anchor = Vector2.right;
             tipData.pivot = Vector2.right;
 
+            BaseItemData idata2 = null;
+            BaseItemData idata3 = null;
+
+            int id = itemData.itemId;
+            if (id == 10002)
+            {
+                idata2 = new BaseItemData(10001, 1);
+                tipData = new ItemTipData();
+                tipData.isCompareLeftPart = true;
+                idata2.tipData = tipData;
+
+                idata3 = new BaseItemData(10001, 1);
+                tipData = new ItemTipData();
+                tipData.isCompareLeftPart = true;
+                idata3.tipData = tipData;
+            }
+
+            return (itemData, idata2, idata3);
         }
 
         public override void Clear()
