@@ -76,6 +76,10 @@ namespace Core.UI
         /// <param name="max"></param>
         public static void GetRect(this RectTransform content, ref Vector2 min, ref Vector2 max)
         {
+            if (!content.gameObject.activeSelf)
+            {
+                return;
+            }
             Vector3[] corners = new Vector3[4];
             content.GetWorldCorners(corners);
             min.x = Mathf.Min(new float[] { min.x, corners[0].x, corners[2].x });

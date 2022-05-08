@@ -89,7 +89,9 @@ namespace Item.View
 
         private const float scrollRectTopSpacing = 4;
         private const float scrollRectBottomSpacing = 4;
+        private const float backgroundBottomSpacing = 4;
         private const float maxBackgroundHeight = 500;
+        private const float compareTipSpacingX = 2;
 
         private List<RelayoutState> relayoutStates = new List<RelayoutState>(16);
         private Vector3 tempVec3 = new Vector3(0, 0, 0);
@@ -138,14 +140,14 @@ namespace Item.View
                 scrollRect.transform.localPosition = tempVec3;
                 scrollRect.content.anchoredPosition = Vector2.zero;
 
-                int middleLayerModuleCnt = 0;
+                int middleLayerModuleCnt;
                 if ((middleLayerModuleCnt = RelayoutLayer(ModuleLayerType.Scroll)) >= 0)
                 {
                     scrollRect.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
                     var bounds = scrollRect.content.CalculateWorldBounds();
                     scrollRect.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, bounds.size.y);
 
-                    int bottomLayerModuleCnt = 0;
+                    int bottomLayerModuleCnt;
                     if ((bottomLayerModuleCnt = RelayoutLayer(ModuleLayerType.Bottom)) >= 0)
                     {
                         AdjustSize(middleLayerModuleCnt, bottomLayerModuleCnt);
@@ -228,11 +230,10 @@ namespace Item.View
 
                             lastModuleType = module.moduleType;
                             lastModuleSubType = module.subModuleType;
-                            relayoutStates[i] = RelayoutState.Finished;
-
-                            currentRelayoutIndex++;
-                            finishedModuleCount++;
                         }
+                        relayoutStates[i] = RelayoutState.Finished;
+                        currentRelayoutIndex++;
+                        finishedModuleCount++;
                     }
                     else
                     {
@@ -258,6 +259,7 @@ namespace Item.View
             {
                 totalSize += scrollRectBottomSpacing + bottomRelayoutOffset;
             }
+            totalSize += backgroundBottomSpacing;
             
             if (totalSize <= maxBackgroundHeight)
             {
@@ -293,23 +295,20 @@ namespace Item.View
             float bgWidth = background.rectTransform.rect.width;
             float bgHeight = background.rectTransform.rect.height;
 
-            if (tipData.isCompare)
-            {
-                //处理第一个对比tip
-                anchor.x = tipData.isCompareLeftPart ? 1 : 0;
-            }
             background.rectTransform.anchorMin = anchor;
             background.rectTransform.anchorMax = anchor;
             tempVec3.x += bgWidth * (0.5f - anchor.x);
             tempVec3.y += bgHeight * (0.5f - anchor.y);
 
-            if (tipData.compareIndex == 2)
-            {
-                //由第一个对比tip基础上再偏移一次
-                tempVec3.x += tipData.isCompareLeftPart ? bgWidth * -1 : bgWidth;
-            }
-
             background.rectTransform.anchoredPosition = tempVec3;
+
+            tempVec3 = root.anchoredPosition;
+            if (tipData.compareIndex > 0)
+            {
+                //由原始tip基础上偏移
+                tempVec3.x += tipData.compareIndex * (bgWidth + compareTipSpacingX) * (tipData.isCompareLeftPart ? -1 : 1);
+            }
+            root.anchoredPosition = tempVec3;
         }
 
         #endregion

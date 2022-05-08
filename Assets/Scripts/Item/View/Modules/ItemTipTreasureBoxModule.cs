@@ -54,5 +54,12 @@ namespace Item.View.Modules
                 OnSetDataFinished();
             }
         }
+
+        protected override void Clear()
+        {
+            base.Clear();
+
+            itemGrid.Clear();
+        }
     }
 }

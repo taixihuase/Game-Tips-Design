@@ -33,6 +33,11 @@ namespace Core.UI
             layout.Reposition();
         }
 
+        public void CallOnReposition()
+        {
+            layout.CallOnReposition();
+        }
+
         public void SetData(IEnumerable[] datas)
         {
             layout.SetData(datas);

@@ -2,6 +2,7 @@ using Item.Model;
 using Item.View;
 using UnityEngine;
 using Core.UI;
+using UnityEngine.UI;
 
 public abstract class ItemTipModule : MonoBehaviour
 {
@@ -52,7 +53,7 @@ public abstract class ItemTipModule : MonoBehaviour
 
     public virtual float GetModuleSpacing(int lastModuleType, int lastModuleSubType)
     {
-        if (lastModuleSubType == 0)
+        if (lastModuleType == 0)
         {
             return 0;
         }
@@ -63,6 +64,7 @@ public abstract class ItemTipModule : MonoBehaviour
     //模块内部自行排版和偏移
     public virtual float Relayout()
     {
+        LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
         var bound = rectTransform.CalculateWorldBounds();
         return bound.size.y;
     }
@@ -77,5 +79,12 @@ public abstract class ItemTipModule : MonoBehaviour
         IsValid = false;
         itemData = null;
         parentView = null;
+
+        Clear();
+    }
+
+    protected virtual void Clear()
+    {
+
     }
 }

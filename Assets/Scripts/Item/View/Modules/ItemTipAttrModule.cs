@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Item.View.Modules
 {
@@ -21,7 +22,7 @@ namespace Item.View.Modules
         [SerializeField]
         private TextMeshProUGUI title;
         [SerializeField]
-        private UIGrid attrGrid;
+        private UITable attrTable;
 
         public override void SetData(BaseItemData itemData)
         {
@@ -41,7 +42,7 @@ namespace Item.View.Modules
                 var equipRes = EquipCfgManager.Inst().GetItemById(itemData.itemId);
                 if (equipRes != null)
                 {
-                    attrGrid.Init("ui/window/itemtip/ui_itemtipview_attritem", OnSetDataFinished);
+                    attrTable.Init("ui/window/itemtip/ui_itemtipview_attritem.prefab", OnSetDataFinished);
                     Attrs attrs = null;
                     if (subModuleType == ItemTipModuleType.AttrModuleType.Base)
                     {
@@ -53,16 +54,29 @@ namespace Item.View.Modules
                     }
                     if (attrs?.IsEmpty() == false)
                     {
-                        attrGrid.SetData(attrs.attrs);
+                        IsValid = attrs.attrs.Count > 0;
+                        attrTable.SetData(attrs.attrs);
                     }
                 }
             }
 
-            IsValid = attrGrid.GetData()?.Count > 0;
             if (!IsValid)
             {
                 OnSetDataFinished();
             }
+        }
+
+        public override float Relayout()
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(attrTable.GetComponent<RectTransform>());
+            return base.Relayout();
+        }
+
+        protected override void Clear()
+        {
+            base.Clear();
+
+            attrTable.Clear();
         }
     }
 }

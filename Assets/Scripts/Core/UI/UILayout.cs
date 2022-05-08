@@ -17,7 +17,7 @@ namespace Core.UI
 
         public List<UILayoutItem> Items { get; private set; }
 
-        private OnReposition onReposition = null;
+        protected OnReposition onReposition = null;
 
         private string itemPrefabPath = null;
 
@@ -65,6 +65,11 @@ namespace Core.UI
         public void Reposition()
         {
             LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
+            CallOnReposition();
+        }
+
+        public void CallOnReposition()
+        {
             onReposition?.Invoke();
         }
 
@@ -124,21 +129,25 @@ namespace Core.UI
 
         private void PopItems()
         {
-            var itemList = itemPool[itemPrefabPathHash];
-
-            int i = itemList.Count - 1;
-            for (int j = 0; j < ItemDatas.Count; j++)
+            if (itemPool.ContainsKey(itemPrefabPathHash))
             {
-                UILayoutItem item = itemList[i];
-                UIUtils.SetParent(item.transform, rectTransform, true);
-                item.gameObject.SetActive(true);
+                var itemList = itemPool[itemPrefabPathHash];
 
-                itemList.RemoveAt(i);
-                i--;
+                int i = itemList.Count - 1;
+                for (int j = 0; j < ItemDatas.Count; j++)
+                {
+                    UILayoutItem item = itemList[i];
+                    UIUtils.SetParent(item.transform, rectTransform, true);
+                    item.gameObject.SetActive(true);
 
-                Items.Add(item);
-                item.SetData(ItemDatas[j]);
+                    itemList.RemoveAt(i);
+                    i--;
+
+                    Items.Add(item);
+                    item.SetData(ItemDatas[j]);
+                }
             }
+            CallOnReposition();
         }
 
         private void Recycle()
@@ -149,16 +158,19 @@ namespace Core.UI
                 createCoroutine = null;
             }
 
-            var itemList = itemPool[itemPrefabPathHash];
-            for (int i = 0; i < Items.Count; i++)
+            if (itemPool.ContainsKey(itemPrefabPathHash))
             {
-                UILayoutItem item = Items[i];
-                item.Clear();
-                UIUtils.SetParent(item.transform, poolRootObj.transform);
-            }
+                var itemList = itemPool[itemPrefabPathHash];
+                for (int i = 0; i < Items.Count; i++)
+                {
+                    UILayoutItem item = Items[i];
+                    item.Clear();
+                    UIUtils.SetParent(item.transform, poolRootObj.transform);
+                }
 
-            itemList.AddRange(Items);
-            Items.Clear();
+                itemList.AddRange(Items);
+            }
+            Items?.Clear();
         }
 
         public void Clear()

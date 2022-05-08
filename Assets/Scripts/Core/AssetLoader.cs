@@ -11,8 +11,9 @@ namespace Core
             string editorPath = "Assets/" + path;
             T asset = AssetDatabase.LoadAssetAtPath<T>(editorPath);
             return asset;
-#endif
+#else
             return null;
+#endif
         }
 
         public static void UnloadAsset(Object asset)

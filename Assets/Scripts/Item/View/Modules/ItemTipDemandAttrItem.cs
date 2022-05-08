@@ -26,16 +26,16 @@ namespace Item.View.Modules
                 {
                     if (pVal >= attr.value)
                     {
-                        attrText.text = attrRes.name + ":" + val;
+                        attrText.text = attrRes.displayName + "：" + val;
                     }
                     else
                     {
-                        attrText.text = attrRes.name + ":[de2524]" + val + "[-]";
+                        attrText.text = attrRes.displayName + "：<#de2524>" + val + "</color>";
                     }
                 }
                 else
                 {
-                    attrText.text = attrRes.name + ":[de2524]" + val + "[-]";
+                    attrText.text = attrRes.displayName + "：<#de2524>" + val + "</color>";
                 }
             }
         }

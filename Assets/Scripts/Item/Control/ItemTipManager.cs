@@ -45,62 +45,91 @@ namespace Item.Control
 
         private void RegistTipModules()
         {
+            //RegistModules(ItemTipType.Item,
+            //    ItemTipModuleType.Header,
+            //    ItemTipModuleType.BaseInfo,
+            //    ItemTipModuleType.Demand,
+            //    ItemTipModuleType.Effect,
+            //    ItemTipModuleType.Desc,
+            //    ItemTipModuleType.Price,
+            //    ItemTipModuleType.Button);
+
+            //RegistModules(ItemTipType.Equip,
+            //    ItemTipModuleType.Header,
+            //    ItemTipModuleType.BaseInfo,
+            //    ItemTipModuleType.Demand,
+            //    ItemTipModuleType.Attr + ItemTipModuleType.AttrModuleType.Base,
+            //    ItemTipModuleType.Attr + ItemTipModuleType.AttrModuleType.Addition,
+            //    ItemTipModuleType.Desc,
+            //    ItemTipModuleType.Price,
+            //    ItemTipModuleType.Button);
+
+            //RegistModules(ItemTipType.Skill,
+            //    ItemTipModuleType.Header,
+            //    ItemTipModuleType.BaseInfo,
+            //    ItemTipModuleType.Demand,
+            //    ItemTipModuleType.Skill,
+            //    ItemTipModuleType.Effect,
+            //    ItemTipModuleType.Desc,
+            //    ItemTipModuleType.Price,
+            //    ItemTipModuleType.Button);
+
+            //RegistModules(ItemTipType.Mount,
+            //    ItemTipModuleType.Header,
+            //    ItemTipModuleType.BaseInfo,
+            //    ItemTipModuleType.Demand,
+            //    ItemTipModuleType.Skill,
+            //    ItemTipModuleType.Effect,
+            //    ItemTipModuleType.Desc,
+            //    ItemTipModuleType.Price,
+            //    ItemTipModuleType.Button);
+
+            //RegistModules(ItemTipType.Box,
+            //    ItemTipModuleType.Header,
+            //    ItemTipModuleType.BaseInfo,
+            //    ItemTipModuleType.Demand,
+            //    ItemTipModuleType.Item + ItemTipModuleType.ItemModuleType.Preview,
+            //    ItemTipModuleType.Item + ItemTipModuleType.ItemModuleType.Selectable,
+            //    ItemTipModuleType.Effect,
+            //    ItemTipModuleType.Desc,
+            //    ItemTipModuleType.Price,
+            //    ItemTipModuleType.Button);
+
+            //RegistModules(ItemTipType.Currency,
+            //    ItemTipModuleType.Header,
+            //    ItemTipModuleType.BaseInfo,
+            //    ItemTipModuleType.Effect,
+            //    ItemTipModuleType.Desc,
+            //    ItemTipModuleType.Button);
+
             RegistModules(ItemTipType.Item,
-                ItemTipModuleType.Header,
-                ItemTipModuleType.BaseInfo,
-                ItemTipModuleType.Demand,
-                ItemTipModuleType.Effect,
-                ItemTipModuleType.Desc,
-                ItemTipModuleType.Price,
-                ItemTipModuleType.Button);
+    ItemTipModuleType.Header,
+    ItemTipModuleType.BaseInfo,
+    ItemTipModuleType.Demand);
 
             RegistModules(ItemTipType.Equip,
                 ItemTipModuleType.Header,
                 ItemTipModuleType.BaseInfo,
-                ItemTipModuleType.Demand,
-                ItemTipModuleType.Attr + ItemTipModuleType.AttrModuleType.Base,
-                ItemTipModuleType.Attr + ItemTipModuleType.AttrModuleType.Addition,
-                ItemTipModuleType.Desc,
-                ItemTipModuleType.Price,
-                ItemTipModuleType.Button);
+                ItemTipModuleType.Demand);
 
             RegistModules(ItemTipType.Skill,
                 ItemTipModuleType.Header,
                 ItemTipModuleType.BaseInfo,
-                ItemTipModuleType.Demand,
-                ItemTipModuleType.Skill,
-                ItemTipModuleType.Effect,
-                ItemTipModuleType.Desc,
-                ItemTipModuleType.Price,
-                ItemTipModuleType.Button);
+                ItemTipModuleType.Demand);
 
             RegistModules(ItemTipType.Mount,
                 ItemTipModuleType.Header,
                 ItemTipModuleType.BaseInfo,
-                ItemTipModuleType.Demand,
-                ItemTipModuleType.Skill,
-                ItemTipModuleType.Effect,
-                ItemTipModuleType.Desc,
-                ItemTipModuleType.Price,
-                ItemTipModuleType.Button);
+                ItemTipModuleType.Demand);
 
             RegistModules(ItemTipType.Box,
                 ItemTipModuleType.Header,
                 ItemTipModuleType.BaseInfo,
-                ItemTipModuleType.Demand,
-                ItemTipModuleType.Item + ItemTipModuleType.ItemModuleType.Preview,
-                ItemTipModuleType.Item + ItemTipModuleType.ItemModuleType.Selectable,
-                ItemTipModuleType.Effect,
-                ItemTipModuleType.Desc,
-                ItemTipModuleType.Price,
-                ItemTipModuleType.Button);
+                ItemTipModuleType.Demand);
 
             RegistModules(ItemTipType.Currency,
                 ItemTipModuleType.Header,
-                ItemTipModuleType.BaseInfo,
-                ItemTipModuleType.Effect,
-                ItemTipModuleType.Desc,
-                ItemTipModuleType.Button);
+                ItemTipModuleType.BaseInfo);
         }
 
         private void RegistModules(ItemTipType tipType, params int[] modules)
@@ -117,7 +146,6 @@ namespace Item.Control
         public void OpenTipView(BaseItemData itemData1, BaseItemData itemData2 = null, BaseItemData itemData3 = null)
         {
             itemData1.tipData.isCompare = false;
-            OpenTipView(itemData1);
 
             if (itemData2 != null)
             {
@@ -127,12 +155,11 @@ namespace Item.Control
                 itemData2.tipData.pos = itemData1.tipData.pos;
                 itemData2.tipData.anchor = itemData1.tipData.anchor;
                 itemData2.tipData.pivot = itemData1.tipData.pivot;
-                OpenTipView(itemData2);
             }
             
             if (itemData3 != null)
             {
-                itemData2.tipData.compareIndex = 2;
+                itemData3.tipData.compareIndex = 2;
                 itemData3.tipData.isAdditionalPart = true;
                 //对比tip放在同一侧
                 itemData3.tipData.isCompareLeftPart = itemData2.tipData.isCompareLeftPart;
@@ -140,8 +167,11 @@ namespace Item.Control
                 itemData3.tipData.pos = itemData1.tipData.pos;
                 itemData3.tipData.anchor = itemData1.tipData.anchor;
                 itemData3.tipData.pivot = itemData1.tipData.pivot;
-                OpenTipView(itemData3);
             }
+
+            OpenTipView(itemData1);
+            OpenTipView(itemData2);
+            OpenTipView(itemData3);
         }
 
         public void OpenTipView(BaseItemData itemData)

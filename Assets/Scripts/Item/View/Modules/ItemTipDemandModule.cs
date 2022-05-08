@@ -4,6 +4,7 @@ using CsvManager;
 using Item.Enum;
 using Item.Model;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Item.View.Modules
 {
@@ -12,40 +13,45 @@ namespace Item.View.Modules
         public override int moduleType => ItemTipModuleType.Demand;
 
         [SerializeField]
-        private GameObject demandLimitObj;
-        [SerializeField]
-        private UIGrid demandGrid;
+        private UITable demandTable;
 
         public override void SetData(BaseItemData itemData)
         {
             base.SetData(itemData);
 
             ItemTipType tipType = EnumUtil.GetEnumByDescription<ItemTipType>(itemData.itemRes.type);
-            demandLimitObj.SetActive(tipType == ItemTipType.Equip);
             if (tipType == ItemTipType.Equip)
             {
                 var equipRes = EquipCfgManager.Inst().GetItemById(itemData.itemId);
                 if (equipRes != null)
                 {
                     var attrs = equipRes.demandAttrs;
-                    demandGrid.Init("ui/window/itemtip/ui_itemtipview_demandattritem", OnGridReposition);
+                    demandTable.Init("ui/window/itemtip/ui_itemtipview_demandattritem.prefab", OnSetDataFinished);
                     if (attrs?.IsEmpty() == false)
                     {
-                        demandGrid.SetData(attrs.attrs);
+                        IsValid = attrs.attrs.Count > 0;
+                        demandTable.SetData(attrs.attrs);
                     }
                 }
             }
 
-            IsValid = demandGrid.GetData()?.Count > 0;
             if (!IsValid)
             {
                 OnSetDataFinished();
             }
         }
 
-        private void OnGridReposition()
+        public override float Relayout()
         {
-            OnSetDataFinished();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(demandTable.GetComponent<RectTransform>());
+            return base.Relayout();
+        }
+
+        protected override void Clear()
+        {
+            base.Clear();
+
+            demandTable.Clear();
         }
     }
 }

@@ -140,10 +140,9 @@ namespace Item.Control
         private void AddModulesPath()
         {
             AddModulePath(ItemTipModuleType.Header, "ui/window/itemtip/ui_itemtipview_headermodule.prefab");
-            //AddModulePath(ItemTipModuleType.BaseInfo, "ui/window/itemtip/ui_itemtipview_baseinfomodule.prefab");
-            //AddModulePath(ItemTipModuleType.Demand, "ui/window/itemtip/ui_itemtipview_demandmodule.prefab");
-            //AddModulePath(ItemTipModuleType.Attr, "ui/window/itemtip/ui_itemtipview_attrmodule.prefab");
-            //AddModulePath(ItemTipModuleType.Suit, "ui/window/itemtip/ui_itemtipview_suitmodule.prefab");
+            AddModulePath(ItemTipModuleType.BaseInfo, "ui/window/itemtip/ui_itemtipview_baseinfomodule.prefab");
+            AddModulePath(ItemTipModuleType.Demand, "ui/window/itemtip/ui_itemtipview_demandmodule.prefab");
+            AddModulePath(ItemTipModuleType.Attr, "ui/window/itemtip/ui_itemtipview_attrmodule.prefab");
             //AddModulePath(ItemTipModuleType.Skill, "ui/window/itemtip/ui_itemtipview_skillmodule.prefab");
             //AddModulePath(ItemTipModuleType.Desc, "ui/window/itemtip/ui_itemtipview_descmodule.prefab");
             //AddModulePath(ItemTipModuleType.Price, "ui/window/itemtip/ui_itemtipview_pricemodule.prefab");
@@ -162,7 +161,6 @@ namespace Item.Control
             UIUtils.SetParent(module.transform, poolRoot, true);
             module.transform.position = Vector3.zero;
             module.Recycle();
-            module.gameObject.SetActive(false);
             List<ItemTipModule> moduleList;
             if (modulePool.TryGetValue(moduleType, out moduleList))
             {

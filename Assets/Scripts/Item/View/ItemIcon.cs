@@ -14,8 +14,6 @@ namespace Item.View
     public class ItemIcon : UILayoutItem, IPointerClickHandler
     {
         [SerializeField]
-        private int size = 86;
-        [SerializeField]
         private Image quality;
         [SerializeField]
         private Image icon;
@@ -76,9 +74,9 @@ namespace Item.View
             var tipData = new ItemTipData();
             itemData.tipData = tipData;
 
-            tipData.pos = new Vector2(100, 100);
-            tipData.anchor = Vector2.right;
-            tipData.pivot = Vector2.right;
+            tipData.pos = new Vector2(100, 250);
+            tipData.anchor = Vector2.one;
+            tipData.pivot = Vector2.one;
 
             BaseItemData idata2 = null;
             BaseItemData idata3 = null;
@@ -86,6 +84,8 @@ namespace Item.View
             int id = itemData.itemId;
             if (id == 10002)
             {
+                tipData.pos = new Vector2(400, 250);
+
                 idata2 = new BaseItemData(10001, 1);
                 tipData = new ItemTipData();
                 tipData.isCompareLeftPart = true;

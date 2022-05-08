@@ -19,7 +19,7 @@ namespace Item.View.Modules
             {
                 var attrRes = AttributeCfgManager.Inst().GetItemById(attr.type);
                 string val = attrRes.isWPercentage ? Convert.ToDouble(attr.value / 10000f).ToString("P") : attr.value.ToString();
-                attrText.text = attrRes.name + " +" + val;
+                attrText.text = attrRes.displayName + " +" + val;
             }
         }
     }

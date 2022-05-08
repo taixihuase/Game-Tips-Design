@@ -3,6 +3,7 @@ using Item.Enum;
 using Item.Model;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Item.View.Modules
 {
@@ -11,7 +12,7 @@ namespace Item.View.Modules
         public override int moduleType => ItemTipModuleType.BaseInfo;
 
         [SerializeField]
-        private UIGrid layoutGrid;
+        private UITable layoutTable;
         [SerializeField]
         private GameObject levelLimitObj;
         [SerializeField]
@@ -48,7 +49,8 @@ namespace Item.View.Modules
 
         public override float Relayout()
         {
-            layoutGrid.Reposition();
+            layoutTable.Reposition();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(layoutTable.GetComponent<RectTransform>());
             return base.Relayout();
         }
     }
