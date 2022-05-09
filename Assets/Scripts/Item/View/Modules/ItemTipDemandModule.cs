@@ -41,12 +41,6 @@ namespace Item.View.Modules
             }
         }
 
-        public override float Relayout()
-        {
-            LayoutRebuilder.ForceRebuildLayoutImmediate(demandTable.GetComponent<RectTransform>());
-            return base.Relayout();
-        }
-
         protected override void Clear()
         {
             base.Clear();

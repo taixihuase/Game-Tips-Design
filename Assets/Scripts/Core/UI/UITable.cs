@@ -35,6 +35,11 @@ namespace Core.UI
             layout.Reposition();
         }
 
+        public void ForceRebuildLayoutImmediate()
+        {
+            layout.ForceRebuildLayoutImmediate();
+        }
+
         public void CallOnReposition()
         {
             layout.CallOnReposition();

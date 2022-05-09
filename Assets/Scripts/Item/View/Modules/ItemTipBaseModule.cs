@@ -3,7 +3,6 @@ using Item.Enum;
 using Item.Model;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Item.View.Modules
 {
@@ -50,7 +49,6 @@ namespace Item.View.Modules
         public override float Relayout()
         {
             layoutTable.Reposition();
-            LayoutRebuilder.ForceRebuildLayoutImmediate(layoutTable.GetComponent<RectTransform>());
             return base.Relayout();
         }
     }

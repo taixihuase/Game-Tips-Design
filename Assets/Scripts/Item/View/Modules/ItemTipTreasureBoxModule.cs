@@ -40,9 +40,13 @@ namespace Item.View.Modules
                         BaseItemData idata = boxRes.rewardItemDatas[i];
                         if (idata.tipData == null)
                         {
-                            idata.tipData = new ItemTipData();
+                            idata.tipData = new ItemTipData();  
                         }
-                        idata.tipData.isAdditionalPart = true;
+                        idata.tipData.pos = itemData.tipData.pos;
+                        idata.tipData.pivot = itemData.tipData.pivot;
+                        idata.tipData.anchor = itemData.tipData.anchor;
+                        idata.tipData.isCompareLeftPart = false;
+                        idata.tipData.additionalPartIndex = 1;
                     }
                     itemGrid.SetData(boxRes.rewardItemDatas);
                 }

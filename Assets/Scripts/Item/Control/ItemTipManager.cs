@@ -149,7 +149,7 @@ namespace Item.Control
 
             if (itemData2 != null)
             {
-                itemData2.tipData.compareIndex = 1;
+                itemData2.tipData.additionalPartIndex = 1;
                 itemData2.tipData.isAdditionalPart = true;
                 //对比tip以原始tip坐标做偏移
                 itemData2.tipData.pos = itemData1.tipData.pos;
@@ -159,7 +159,7 @@ namespace Item.Control
             
             if (itemData3 != null)
             {
-                itemData3.tipData.compareIndex = 2;
+                itemData3.tipData.additionalPartIndex = 2;
                 itemData3.tipData.isAdditionalPart = true;
                 //对比tip放在同一侧
                 itemData3.tipData.isCompareLeftPart = itemData2.tipData.isCompareLeftPart;

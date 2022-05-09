@@ -303,10 +303,10 @@ namespace Item.View
             background.rectTransform.anchoredPosition = tempVec3;
 
             tempVec3 = root.anchoredPosition;
-            if (tipData.compareIndex > 0)
+            if (tipData.additionalPartIndex > 0)
             {
                 //由原始tip基础上偏移
-                tempVec3.x += tipData.compareIndex * (bgWidth + compareTipSpacingX) * (tipData.isCompareLeftPart ? -1 : 1);
+                tempVec3.x += tipData.additionalPartIndex * (bgWidth + compareTipSpacingX) * (tipData.isCompareLeftPart ? -1 : 1);
             }
             root.anchoredPosition = tempVec3;
         }

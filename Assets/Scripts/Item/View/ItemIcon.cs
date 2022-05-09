@@ -82,7 +82,7 @@ namespace Item.View
             BaseItemData idata3 = null;
 
             int id = itemData.itemId;
-            if (id == 10002)
+            if (id == 10003)
             {
                 tipData.pos = new Vector2(400, 250);
 
@@ -91,11 +91,39 @@ namespace Item.View
                 tipData.isCompareLeftPart = true;
                 idata2.tipData = tipData;
 
-                idata3 = new BaseItemData(10001, 1);
+                idata3 = new BaseItemData(10002, 1);
                 tipData = new ItemTipData();
                 tipData.isCompareLeftPart = true;
                 idata3.tipData = tipData;
             }
+            if (id == 20002)
+            {
+                itemData.serverData = new AbstractItem();
+                itemData.serverData.itemId = id;
+                itemData.serverData.num = itemData.num;
+
+                itemData.tipData.canOperate = true;
+            }
+            if (id == 60001)
+            {
+                itemData.serverData = new AbstractItem();
+                itemData.serverData.itemId = id;
+                itemData.serverData.num = itemData.num;
+
+                itemData.tipData.pos = new Vector2(-400, 250);
+                tipData.anchor = Vector2.up;
+                tipData.pivot = Vector2.up;
+                itemData.tipData.canOperate = true;
+            }
+            if (id == 70002)
+            {
+                itemData.serverData = new AbstractItem();
+                itemData.serverData.itemId = id;
+                itemData.serverData.currencyType = "GOLD";
+
+                itemData.tipData.canOperate = true;
+            }
+
 
             return (itemData, idata2, idata3);
         }
@@ -105,7 +133,7 @@ namespace Item.View
 
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        public virtual void OnPointerClick(PointerEventData eventData)
         {
             ItemTipManager.Inst().OpenTipView(GenerateDatas(itemData));
         }

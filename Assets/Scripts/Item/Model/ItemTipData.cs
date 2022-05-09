@@ -31,7 +31,6 @@ namespace Item.Model
                 else
                 {
                     isCompareLeftPart = false;
-                    compareIndex = 0;
                 }
             }
         }
@@ -51,8 +50,25 @@ namespace Item.Model
             }
         }
 
-        //标识第一个对比tip和第二个对比tip
-        public int compareIndex;
+        //标识第一个附加tip和第二个附加tip
+        private int _additionalPartIndex;
+        public int additionalPartIndex
+        {
+            get { return _additionalPartIndex; }
+            set
+            {
+                _additionalPartIndex = value;
+                if (value > 0)
+                {
+                    isAdditionalPart = true;
+                }
+                else
+                {
+                    isAdditionalPart = false;
+                    isCompare = false;
+                }
+            }
+        }
 
         //标识是否同时显示的tip
         private bool _isAdditionalPart;

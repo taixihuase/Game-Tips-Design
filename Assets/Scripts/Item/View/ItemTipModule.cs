@@ -4,6 +4,7 @@ using UnityEngine;
 using Core.UI;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(ContentSizeFitter))]
 public abstract class ItemTipModule : MonoBehaviour
 {
     public abstract int moduleType
@@ -64,6 +65,7 @@ public abstract class ItemTipModule : MonoBehaviour
     //模块内部自行排版和偏移
     public virtual float Relayout()
     {
+        //强制重新刷新布局大小，避免size延迟刷新问题
         LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
         var bound = rectTransform.CalculateWorldBounds();
         return bound.size.y;

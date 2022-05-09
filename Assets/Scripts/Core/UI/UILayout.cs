@@ -64,8 +64,13 @@ namespace Core.UI
 
         public void Reposition()
         {
-            LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
+            ForceRebuildLayoutImmediate();
             CallOnReposition();
+        }
+
+        public void ForceRebuildLayoutImmediate()
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
         }
 
         public void CallOnReposition()
@@ -147,7 +152,7 @@ namespace Core.UI
                     item.SetData(ItemDatas[j]);
                 }
             }
-            CallOnReposition();
+            Reposition();
         }
 
         private void Recycle()
