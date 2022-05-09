@@ -110,7 +110,7 @@ namespace Item.View
                 itemData.serverData.itemId = id;
                 itemData.serverData.num = itemData.num;
 
-                itemData.tipData.pos = new Vector2(-400, 250);
+                itemData.tipData.pos = new Vector2(-600, 250);
                 tipData.anchor = Vector2.up;
                 tipData.pivot = Vector2.up;
                 itemData.tipData.canOperate = true;

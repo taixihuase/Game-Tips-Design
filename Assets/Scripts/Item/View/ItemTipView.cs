@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Core.UI;
 using static Item.Enum.ItemTipModuleType;
 using Item.Control;
+using Item.View.Modules;
 
 namespace Item.View
 {
@@ -89,7 +90,6 @@ namespace Item.View
 
         private const float scrollRectTopSpacing = 4;
         private const float scrollRectBottomSpacing = 4;
-        private const float backgroundBottomSpacing = 4;
         private const float maxBackgroundHeight = 500;
         private const float compareTipSpacingX = 2;
 
@@ -248,24 +248,66 @@ namespace Item.View
             return finishedModuleCount;
         }
 
+        private ItemTipModule FindFirstValidModuleWithinRange(int start, int end)
+        {
+            ItemTipModule module;
+            int sign = start < end ? 1 : -1;
+            for (int i = start; sign > 0 ? i < end : i >= end; i += sign)
+            {
+                module = tempModuleList[i];
+                if (module != null && module.IsValid)
+                {
+                    return module;
+                }
+            }
+            return null;
+        }
+
         private void AdjustSize(int middleCnt, int bottomCnt)
         {
             float totalSize = topRelayoutOffset;
+
+            ItemTipModule midModule = null;
+            ItemTipModule bottomModule = null;
             if (middleCnt > 0)
             {
-                totalSize += scrollRectTopSpacing + middleRelayoutOffset;
+                //找到一个滚动区域的有效模块
+                midModule = FindFirstValidModuleWithinRange(currentRelayoutIndex - bottomCnt - 1, currentRelayoutIndex - bottomCnt - middleCnt);
+                if (midModule != null)
+                {
+                    totalSize += middleRelayoutOffset + scrollRectTopSpacing;
+                }
             }
+
+            float toBottomSpacing = 0;
             if (bottomCnt > 0)
             {
-                totalSize += scrollRectBottomSpacing + bottomRelayoutOffset;
+                //找到底部区域最后一个有效模块
+                bottomModule = FindFirstValidModuleWithinRange(currentRelayoutIndex - 1, currentRelayoutIndex - bottomCnt);
+                if (bottomModule != null)
+                {
+                    totalSize += bottomRelayoutOffset;
+                    if (midModule != null)
+                    {
+                        totalSize += scrollRectBottomSpacing;
+                    }
+                    else
+                    {
+                        totalSize += scrollRectTopSpacing;
+                    }
+
+                    //最底部加间距
+                    toBottomSpacing = bottomModule.GetLastModuleToBottomSpacing();
+                    totalSize += toBottomSpacing;
+                }
             }
-            totalSize += backgroundBottomSpacing;
-            
+
             if (totalSize <= maxBackgroundHeight)
             {
                 background.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, totalSize);
 
-                tempVec3.y = -totalSize + bottomRelayoutOffset;
+                //设置底部区域（含底部间距部分）紧贴tip底边
+                tempVec3.y = -totalSize + bottomRelayoutOffset + toBottomSpacing;
                 bottomContentRoot.transform.localPosition = tempVec3;
 
                 scrollRect.viewport.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, middleRelayoutOffset);
@@ -274,7 +316,8 @@ namespace Item.View
             {
                 background.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, maxBackgroundHeight);
 
-                tempVec3.y = -maxBackgroundHeight + bottomRelayoutOffset;
+                //设置底部区域（含底部间距部分）紧贴tip底边
+                tempVec3.y = -maxBackgroundHeight + bottomRelayoutOffset + toBottomSpacing;
                 bottomContentRoot.transform.localPosition = tempVec3;
 
                 scrollRect.viewport.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,

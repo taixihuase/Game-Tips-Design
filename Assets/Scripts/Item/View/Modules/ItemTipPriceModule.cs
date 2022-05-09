@@ -21,5 +21,10 @@ namespace Item.View.Modules
             IsValid = itemData.itemRes.price > 0;
             OnSetDataFinished();
         }
+
+        public override float GetLastModuleToBottomSpacing()
+        {
+            return 4.0f;
+        }
     }
 }

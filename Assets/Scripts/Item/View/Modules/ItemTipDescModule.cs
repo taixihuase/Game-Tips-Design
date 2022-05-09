@@ -21,5 +21,10 @@ namespace Item.View.Modules
             IsValid = !string.IsNullOrEmpty(itemData.itemRes.desc);
             OnSetDataFinished();
         }
+
+        public override float GetLastModuleToBottomSpacing()
+        {
+            return 4.0f;
+        }
     }
 }

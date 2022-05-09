@@ -2,6 +2,7 @@
 using Core.UI;
 using Item.Enum;
 using Item.View;
+using Item.View.Modules;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -144,7 +145,8 @@ namespace Item.Control
             AddModulePath(ItemTipModuleType.Demand, "ui/window/itemtip/ui_itemtipview_demandmodule.prefab");
             AddModulePath(ItemTipModuleType.Attr, "ui/window/itemtip/ui_itemtipview_attrmodule.prefab");
             //AddModulePath(ItemTipModuleType.Skill, "ui/window/itemtip/ui_itemtipview_skillmodule.prefab");
-            //AddModulePath(ItemTipModuleType.Desc, "ui/window/itemtip/ui_itemtipview_descmodule.prefab");
+            AddModulePath(ItemTipModuleType.Desc, "ui/window/itemtip/ui_itemtipview_descmodule.prefab");
+            AddModulePath(ItemTipModuleType.Effect, "ui/window/itemtip/ui_itemtipview_effectmodule.prefab");
             //AddModulePath(ItemTipModuleType.Price, "ui/window/itemtip/ui_itemtipview_pricemodule.prefab");
             //AddModulePath(ItemTipModuleType.Item, "ui/window/itemtip/ui_itemtipview_itemmodule.prefab");
             //AddModulePath(ItemTipModuleType.Button, "ui/window/itemtip/ui_itemtipview_buttonmodule.prefab");
