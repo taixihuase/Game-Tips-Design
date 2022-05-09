@@ -79,5 +79,14 @@ namespace Item.Model
                 itemRes = ItemCfgManager.Inst().GetItemById(itemId);
             }
         }
+
+        public BaseItemData Clone()
+        {
+            BaseItemData clone = new BaseItemData(serverData);
+            clone.SetData(currencyType, num);
+            clone.SetData(itemId, num);
+
+            return clone;
+        }
     }
 }

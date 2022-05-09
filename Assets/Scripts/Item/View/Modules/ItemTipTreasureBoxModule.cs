@@ -4,7 +4,9 @@ using CsvManager;
 using Item.Enum;
 using Item.Model;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Item.View.Modules
 {
@@ -15,6 +17,9 @@ namespace Item.View.Modules
         [SerializeField]
         private UIGrid itemGrid;
 
+        [SerializeField]
+        private ToggleGroup toggleGroup;
+
         public override void SetData(BaseItemData itemData)
         {
             base.SetData(itemData);
@@ -24,38 +29,80 @@ namespace Item.View.Modules
             {
                 if (subModuleType == ItemTipModuleType.ItemModuleType.Preview)
                 {
-                    itemGrid.Init("ui/window/itemtip/ui_itemtipview_previewboxitem", OnSetDataFinished);
+                    var boxId = Convert.ToInt32(itemData.itemRes.effects.typeValues[0].value);
+                    var boxRes = TreasureBoxCfgManager.Inst().GetItemById(boxId);
+                    if (itemData.tipData.canOperate && boxRes.num > 0)
+                    {
+                        IsValid = false;
+                    }
+                    else
+                    {
+                        itemGrid.Init("ui/window/itemtip/ui_itemtipview_previewboxitem.prefab", OnSetDataFinished);
+                        SetGridData();
+                    }
                 }
                 else if (subModuleType == ItemTipModuleType.ItemModuleType.Selectable)
                 {
-                    itemGrid.Init("ui/window/itemtip/ui_itemtipview_selectableboxitem", OnSetDataFinished);
-                }
-
-                var boxId = Convert.ToInt32(itemData.itemRes.effects.typeValues[0].value);
-                var boxRes = TreasureBoxCfgManager.Inst().GetItemById(boxId);
-                if (boxRes?.rewardItemDatas?.Count > 0)
-                {
-                    for (int i = 0; i < boxRes.rewardItemDatas.Count; i++)
+                    if (itemData.tipData.canOperate)
                     {
-                        BaseItemData idata = boxRes.rewardItemDatas[i];
-                        if (idata.tipData == null)
-                        {
-                            idata.tipData = new ItemTipData();  
-                        }
-                        idata.tipData.pos = itemData.tipData.pos;
-                        idata.tipData.pivot = itemData.tipData.pivot;
-                        idata.tipData.anchor = itemData.tipData.anchor;
-                        idata.tipData.isCompareLeftPart = false;
-                        idata.tipData.additionalPartIndex = 1;
+                        itemGrid.Init("ui/window/itemtip/ui_itemtipview_selectableboxitem.prefab", OnSetDataFinished);
+                        SetGridData();
                     }
-                    itemGrid.SetData(boxRes.rewardItemDatas);
+                    else
+                    {
+                        IsValid = false;
+                    }
                 }
             }
 
-            IsValid = tipType == ItemTipType.Box && itemGrid.GetData()?.Count > 0;
             if (!IsValid)
             {
                 OnSetDataFinished();
+            }
+        }
+
+        private void SetGridData()
+        {
+            var boxId = Convert.ToInt32(itemData.itemRes.effects.typeValues[0].value);
+            var boxRes = TreasureBoxCfgManager.Inst().GetItemById(boxId);
+            if (boxRes?.rewardItemDatas?.Count > 0)
+            {
+                List<BaseItemData> list = new List<BaseItemData>();
+                for (int i = 0; i < boxRes.rewardItemDatas.Count; i++)
+                {
+                    BaseItemData idata = boxRes.rewardItemDatas[i].Clone();
+                    if (idata.tipData == null)
+                    {
+                        idata.tipData = new ItemTipData();
+                    }
+                    idata.tipData.pos = itemData.tipData.pos;
+                    idata.tipData.pivot = itemData.tipData.pivot;
+                    idata.tipData.anchor = itemData.tipData.anchor;
+                    idata.tipData.canOperate = false;
+                    idata.tipData.isCompareLeftPart = false;
+                    idata.tipData.additionalPartIndex = itemData.tipData.additionalPartIndex + 1;
+                    list.Add(idata);
+                }
+                IsValid = true;
+                itemGrid.SetData(list);
+            }
+        }
+
+        protected override void OnSetDataFinished()
+        {
+            base.OnSetDataFinished();
+
+            if (IsValid && subModuleType == ItemTipModuleType.ItemModuleType.Selectable)
+            {
+                var itemList = itemGrid.GetItems();
+                for (int i = 0; i < itemList.Count; i++)
+                {
+                    var item = itemList[i] as ItemTipSelectableBoxItem;
+                    if (item != null)
+                    {
+                        item.SelectToggle.group = toggleGroup;
+                    }
+                }
             }
         }
 

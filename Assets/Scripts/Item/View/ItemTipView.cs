@@ -20,6 +20,11 @@ namespace Item.View
 
         private BaseItemData itemData;
 
+        public BaseItemData GetItemData()
+        {
+            return itemData;
+        }
+
         public void AddModule(ItemTipModule module)
         {
             module.SetTipParent(this);
@@ -90,7 +95,7 @@ namespace Item.View
 
         private const float scrollRectTopSpacing = 4;
         private const float scrollRectBottomSpacing = 4;
-        private const float maxBackgroundHeight = 500;
+        private const float maxBackgroundHeight = 380;
         private const float compareTipSpacingX = 2;
 
         private List<RelayoutState> relayoutStates = new List<RelayoutState>(16);
@@ -320,8 +325,17 @@ namespace Item.View
                 tempVec3.y = -maxBackgroundHeight + bottomRelayoutOffset + toBottomSpacing;
                 bottomContentRoot.transform.localPosition = tempVec3;
 
-                scrollRect.viewport.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,
-                    maxBackgroundHeight - (topRelayoutOffset + scrollRectTopSpacing + scrollRectBottomSpacing + bottomRelayoutOffset));
+                //计算滚动区域大小
+                float scrollSize = maxBackgroundHeight - topRelayoutOffset - bottomRelayoutOffset - toBottomSpacing;
+                if (midModule != null || bottomModule != null)
+                {
+                    scrollSize -= scrollRectTopSpacing;
+                    if (midModule != null)
+                    {
+                        scrollSize -= scrollRectBottomSpacing;
+                    }
+                }
+                scrollRect.viewport.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, scrollSize);
             }
         }
 

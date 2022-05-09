@@ -1,4 +1,4 @@
 ﻿唯一ID,名称,开启类型,可选数量,奖励展示
 id,name,openType,num,showReward
 int,string,string,int,string
-10001,百宝袋,RANDOM,1,"[{""type"":""Item"",""value"":""10001_1""},{""type"":""Item"",""value"":""10002_1""},{""type"":""Item"",""value"":""10003_1""},{""type"":""Item"",""value"":""30001_1""},{""type"":""Item"",""value"":""30002_1""}]"
+10001,百宝袋,RANDOM,1,"[{""type"":""Item"",""value"":""10001_1""},{""type"":""Item"",""value"":""10002_1""},{""type"":""Item"",""value"":""10003_1""},{""type"":""Item"",""value"":""30001_1""},{""type"":""Item"",""value"":""30002_1""},{""type"":""Item"",""value"":""60001_1""}]"

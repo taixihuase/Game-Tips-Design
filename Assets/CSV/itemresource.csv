@@ -1,6 +1,6 @@
 ﻿唯一ID,名称,类型,等级,职业需求,出售价格,描述,是否可丢弃,是否绑定,品质,图标,堆叠数量,批量使用,使用效果,效果描述
 id,name,type,level,job,price,desc,drop,binding,quality,icon,pile,batch,effect,effectDesc
-int,string,string,int,int,int,string,bool,bool,int,string,int,bool,string,stringString
+int,string,string,int,int,int,string,bool,bool,int,string,int,bool,string,string
 10001,屠龙宝刀,EQUIP,399,1,999999,"屠龙宝刀,点击就送",TRUE,TRUE,5,icon_wp_10001,1,FALSE,,
 20001,辟邪剑谱,SKILLBOOK,100,0,99999,"欲练此功,必先自宫",TRUE,TRUE,6,icon_item_10001,1,FALSE,"[{""type"":""learnSkill"",""value"":10011}]",使用后可修炼技能“辟邪剑法”
 10002,AK47,EQUIP,1000,0,9999999,大人，时代变了,TRUE,TRUE,7,icon_wp_10002,1,FALSE,,
@@ -10,6 +10,6 @@ int,string,string,int,int,int,string,bool,bool,int,string,int,bool,string,string
 30002,AE86,MOUNT,86,0,86,86上山了,TRUE,TRUE,7,icon_horse_10086,1,FALSE,"[{""type"":""activeHorse"",""value"":10021}]",使用后可获得坐骑“AE 86”
 40001,喜茶,NORMAL,1,0,30,饮茶先啦,TRUE,TRUE,2,icon_item_10003,999,FALSE,"[{""type"":""healing"",""value"":""HP_1000""}]",使用后可恢复1000点生命值
 50001,疯狂星期四,NORMAL,100,0,25,满18-15优惠券,TRUE,TRUE,2,icon_item_10004,99,FALSE,,
-60001,百宝袋,TREASUREBOX,1,0,999999,随机获得一件神器,TRUE,TRUE,7,icon_item_10005,1,FALSE,"[{""type"":""openBox"",""value"":""10001""}]",使用后可随机获得一件宝物
+60001,百宝袋,TREASUREBOX,1,0,999999,选择一件神器,TRUE,TRUE,7,icon_item_10005,1,FALSE,"[{""type"":""openBox"",""value"":""10001""}]",使用后可随机获得一件宝物
 70001,钻石,CURRENCY,1,0,0,一颗永流传,FALSE,TRUE,3,icon_currency_10001,9999,TRUE,"[{""type"":""getCurrency"",""value"":""DIAMOND_1""}]",使用后可获得相应数量的钻石
 70002,金币,CURRENCY,1,0,0,金坷垃,FALSE,TRUE,3,icon_currency_10002,9999,TRUE,"[{""type"":""getCurrency"",""value"":""GOLD_1""}]",使用后可获得相应数量的金币

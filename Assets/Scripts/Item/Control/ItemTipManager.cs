@@ -4,6 +4,7 @@ using Item.View;
 using Item.View.Modules;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Item.Control
 {
@@ -51,8 +52,8 @@ namespace Item.Control
                 ItemTipModuleType.BaseInfo,
                 ItemTipModuleType.Demand,
                 ItemTipModuleType.Effect,
-                ItemTipModuleType.Desc/*,
-                ItemTipModuleType.Price,
+                ItemTipModuleType.Desc,
+                ItemTipModuleType.Price/*,
                 ItemTipModuleType.Button*/);
 
             RegistModules(ItemTipType.Equip,
@@ -61,18 +62,18 @@ namespace Item.Control
                 ItemTipModuleType.Demand,
                 ItemTipModuleType.Attr + ItemTipModuleType.AttrModuleType.Base,
                 ItemTipModuleType.Attr + ItemTipModuleType.AttrModuleType.Addition,
-                ItemTipModuleType.Desc/*,
-                ItemTipModuleType.Price,
+                ItemTipModuleType.Desc,
+                ItemTipModuleType.Price/*,
                 ItemTipModuleType.Button*/);
 
             RegistModules(ItemTipType.Skill,
                 ItemTipModuleType.Header,
                 ItemTipModuleType.BaseInfo,
                 ItemTipModuleType.Demand,
-                //ItemTipModuleType.Skill,
+                ItemTipModuleType.Skill,
                 ItemTipModuleType.Effect,
-                ItemTipModuleType.Desc/*,
-                ItemTipModuleType.Price,
+                ItemTipModuleType.Desc,
+                ItemTipModuleType.Price/*,
                 ItemTipModuleType.Button*/);
 
             RegistModules(ItemTipType.Mount,
@@ -80,19 +81,19 @@ namespace Item.Control
                 ItemTipModuleType.BaseInfo,
                 ItemTipModuleType.Demand,
                 ItemTipModuleType.Effect,
-                ItemTipModuleType.Desc/*,
-                ItemTipModuleType.Price,
+                ItemTipModuleType.Desc,
+                ItemTipModuleType.Price/*,
                 ItemTipModuleType.Button*/);
 
             RegistModules(ItemTipType.Box,
                 ItemTipModuleType.Header,
                 ItemTipModuleType.BaseInfo,
                 ItemTipModuleType.Demand,
-                //ItemTipModuleType.Item + ItemTipModuleType.ItemModuleType.Preview,
-                //ItemTipModuleType.Item + ItemTipModuleType.ItemModuleType.Selectable,
+                ItemTipModuleType.Item + ItemTipModuleType.ItemModuleType.Preview,
+                ItemTipModuleType.Item + ItemTipModuleType.ItemModuleType.Selectable,
                 ItemTipModuleType.Effect,
-                ItemTipModuleType.Desc/*,
-                ItemTipModuleType.Price,
+                ItemTipModuleType.Desc,
+                ItemTipModuleType.Price/*,
                 ItemTipModuleType.Button*/);
 
             RegistModules(ItemTipType.Currency,
@@ -155,6 +156,17 @@ namespace Item.Control
             if (!itemData.tipData.isAdditionalPart)
             {
                 ItemTipPool.Inst().RecycleUsingTips();
+            }
+            else
+            {
+                ItemTipPool.Inst().RecycleUsingTips(itemData.tipData.additionalPartIndex);
+                ItemTipPool.Inst().RecycleUsingTips(itemData.tipData.additionalPartIndex + 1);
+            }
+            int usingCnt = ItemTipPool.Inst().GetUsingTipCount();
+            if (usingCnt >= 3)
+            {
+                Debug.LogError("已经显示最大数量的tips");
+                return;
             }
 
             ItemTipType tipType = GetTipType(itemData);

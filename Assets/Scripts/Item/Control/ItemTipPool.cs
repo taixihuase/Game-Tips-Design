@@ -26,7 +26,7 @@ namespace Item.Control
         private const int initialTipCount = 3;
         private List<ItemTipView> tipPool = new List<ItemTipView>();
 
-        private const int initialModuleCount = 3;
+        private const int initialModuleCount = 1;
         private Dictionary<int, List<ItemTipModule>> modulePool = new Dictionary<int, List<ItemTipModule>>();
         private Dictionary<int, string> modulePrefabPath = new Dictionary<int, string>();
         private ItemTipView[] usingTips = new ItemTipView[3] { null, null, null };
@@ -116,7 +116,7 @@ namespace Item.Control
             }
         }
 
-        public ItemTipView GetUsingTip(uint index = 0)
+        public ItemTipView GetUsingTip(int index = 0)
         {
             if (index < usingTips.Length)
             {
@@ -126,12 +126,31 @@ namespace Item.Control
             return null;
         }
 
+        public int GetUsingTipCount()
+        {
+            int cnt = 0;
+            for (int i = 0; i < usingTips.Length; i++)
+            {
+                if (usingTips[i] != null)
+                {
+                    cnt++;
+                }
+            }
+            return cnt;
+        }
+
         public void RecycleUsingTips()
         {
             for (int i = 0; i < usingTips.Length; i++)
             {
                 PushTip(usingTips[i]);
             }
+        }
+
+        public void RecycleUsingTips(int idx)
+        {
+            var tip = GetUsingTip(idx);
+            PushTip(tip);
         }
 
         #endregion
@@ -144,11 +163,11 @@ namespace Item.Control
             AddModulePath(ItemTipModuleType.BaseInfo, "ui/window/itemtip/ui_itemtipview_baseinfomodule.prefab");
             AddModulePath(ItemTipModuleType.Demand, "ui/window/itemtip/ui_itemtipview_demandmodule.prefab");
             AddModulePath(ItemTipModuleType.Attr, "ui/window/itemtip/ui_itemtipview_attrmodule.prefab");
-            //AddModulePath(ItemTipModuleType.Skill, "ui/window/itemtip/ui_itemtipview_skillmodule.prefab");
+            AddModulePath(ItemTipModuleType.Skill, "ui/window/itemtip/ui_itemtipview_skillmodule.prefab");
             AddModulePath(ItemTipModuleType.Desc, "ui/window/itemtip/ui_itemtipview_descmodule.prefab");
             AddModulePath(ItemTipModuleType.Effect, "ui/window/itemtip/ui_itemtipview_effectmodule.prefab");
-            //AddModulePath(ItemTipModuleType.Price, "ui/window/itemtip/ui_itemtipview_pricemodule.prefab");
-            //AddModulePath(ItemTipModuleType.Item, "ui/window/itemtip/ui_itemtipview_itemmodule.prefab");
+            AddModulePath(ItemTipModuleType.Price, "ui/window/itemtip/ui_itemtipview_pricemodule.prefab");
+            AddModulePath(ItemTipModuleType.Item, "ui/window/itemtip/ui_itemtipview_itemmodule.prefab");
             //AddModulePath(ItemTipModuleType.Button, "ui/window/itemtip/ui_itemtipview_buttonmodule.prefab");
             //AddModulePath(ItemTipModuleType.RightButton, "ui/window/itemtip/ui_itemtipview_rightbuttonmodule.prefab");
         }
@@ -199,6 +218,7 @@ namespace Item.Control
             {
                 GameObject go = AssetLoader.LoadAsset<GameObject>(path);
                 GameObject instance = GameObject.Instantiate(go);
+                UIUtils.SetParent(instance.transform, poolRoot, true);
                 instance.transform.position = Vector3.zero;
                 return instance.GetComponent<ItemTipModule>();
             }

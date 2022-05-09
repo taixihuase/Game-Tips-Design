@@ -22,7 +22,7 @@ namespace Item.View
         [SerializeField]
         private Image binding;
 
-        private BaseItemData itemData;
+        protected BaseItemData itemData;
 
         protected bool isAddLis;
 

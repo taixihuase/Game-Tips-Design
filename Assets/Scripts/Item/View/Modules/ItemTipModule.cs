@@ -50,7 +50,7 @@ namespace Item.View.Modules
             this.itemData = itemData;
         }
 
-        protected void OnSetDataFinished()
+        protected virtual void OnSetDataFinished()
         {
             parentView?.CallRelayout(this);
         }

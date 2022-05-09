@@ -62,5 +62,11 @@ namespace Item.View.Modules
                 default: return "";
             }
         }
+
+        public override float Relayout()
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(skillDesc.rectTransform);
+            return base.Relayout();
+        }
     }
 }
