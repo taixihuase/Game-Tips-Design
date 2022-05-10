@@ -168,8 +168,9 @@ namespace Item.Control
             AddModulePath(ItemTipModuleType.Effect, "ui/window/itemtip/ui_itemtipview_effectmodule.prefab");
             AddModulePath(ItemTipModuleType.Price, "ui/window/itemtip/ui_itemtipview_pricemodule.prefab");
             AddModulePath(ItemTipModuleType.Item, "ui/window/itemtip/ui_itemtipview_itemmodule.prefab");
-            //AddModulePath(ItemTipModuleType.Button, "ui/window/itemtip/ui_itemtipview_buttonmodule.prefab");
-            //AddModulePath(ItemTipModuleType.RightButton, "ui/window/itemtip/ui_itemtipview_rightbuttonmodule.prefab");
+            AddModulePath(ItemTipModuleType.Button, "ui/window/itemtip/ui_itemtipview_buttonmodule.prefab");
+            AddModulePath(ItemTipModuleType.RightButton, "ui/window/itemtip/ui_itemtipview_rightbuttonmodule.prefab");
+            AddModulePath(ItemTipModuleType.Display, "ui/window/itemtip/ui_itemtipview_displaymodule.prefab");
         }
 
         private void AddModulePath(int moduleType, string path)

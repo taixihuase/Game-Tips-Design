@@ -13,6 +13,7 @@
         public const int Price = Desc + 100;
         public const int Button = Price + 100;
         public const int RightButton = Button + 100;
+        public const int Display = RightButton + 100;
 
         public class AttrModuleType
         {

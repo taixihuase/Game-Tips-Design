@@ -1,9 +1,7 @@
 using Item.Model;
-using Item.View;
 using UnityEngine;
 using Core.UI;
 using UnityEngine.UI;
-
 
 namespace Item.View.Modules
 {
@@ -20,7 +18,15 @@ namespace Item.View.Modules
             get; set;
         }
 
-        private ItemTipView parentView;
+        public int totalModuleType
+        {
+            get
+            {
+                return moduleType + subModuleType;
+            }
+        }
+
+        protected ItemTipView parentView;
 
         public BaseItemData itemData
         {
@@ -37,6 +43,19 @@ namespace Item.View.Modules
                     _rectTransform = GetComponent<RectTransform>();
                 }
                 return _rectTransform;
+            }
+        }
+
+        private int _hideModuleTag = 0;
+        public int hideModuleTag
+        {
+            get
+            {
+                return hideModuleTag;
+            }
+            set
+            {
+                hideModuleTag = value;
             }
         }
 
@@ -90,6 +109,7 @@ namespace Item.View.Modules
             IsValid = false;
             itemData = null;
             parentView = null;
+            hideModuleTag = 0;
 
             Clear();
         }

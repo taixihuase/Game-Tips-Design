@@ -53,8 +53,8 @@ namespace Item.Control
                 ItemTipModuleType.Demand,
                 ItemTipModuleType.Effect,
                 ItemTipModuleType.Desc,
-                ItemTipModuleType.Price/*,
-                ItemTipModuleType.Button*/);
+                ItemTipModuleType.Price,
+                ItemTipModuleType.Button);
 
             RegistModules(ItemTipType.Equip,
                 ItemTipModuleType.Header,
@@ -63,8 +63,10 @@ namespace Item.Control
                 ItemTipModuleType.Attr + ItemTipModuleType.AttrModuleType.Base,
                 ItemTipModuleType.Attr + ItemTipModuleType.AttrModuleType.Addition,
                 ItemTipModuleType.Desc,
-                ItemTipModuleType.Price/*,
-                ItemTipModuleType.Button*/);
+                ItemTipModuleType.Price,
+                ItemTipModuleType.Button,
+                ItemTipModuleType.RightButton,
+                ItemTipModuleType.Display);
 
             RegistModules(ItemTipType.Skill,
                 ItemTipModuleType.Header,
@@ -73,8 +75,10 @@ namespace Item.Control
                 ItemTipModuleType.Skill,
                 ItemTipModuleType.Effect,
                 ItemTipModuleType.Desc,
-                ItemTipModuleType.Price/*,
-                ItemTipModuleType.Button*/);
+                ItemTipModuleType.Price,
+                ItemTipModuleType.Button,
+                ItemTipModuleType.RightButton,
+                ItemTipModuleType.Display);
 
             RegistModules(ItemTipType.Mount,
                 ItemTipModuleType.Header,
@@ -82,8 +86,8 @@ namespace Item.Control
                 ItemTipModuleType.Demand,
                 ItemTipModuleType.Effect,
                 ItemTipModuleType.Desc,
-                ItemTipModuleType.Price/*,
-                ItemTipModuleType.Button*/);
+                ItemTipModuleType.Price,
+                ItemTipModuleType.Button);
 
             RegistModules(ItemTipType.Box,
                 ItemTipModuleType.Header,
@@ -93,15 +97,15 @@ namespace Item.Control
                 ItemTipModuleType.Item + ItemTipModuleType.ItemModuleType.Selectable,
                 ItemTipModuleType.Effect,
                 ItemTipModuleType.Desc,
-                ItemTipModuleType.Price/*,
-                ItemTipModuleType.Button*/);
+                ItemTipModuleType.Price,
+                ItemTipModuleType.Button);
 
             RegistModules(ItemTipType.Currency,
                 ItemTipModuleType.Header,
                 ItemTipModuleType.BaseInfo,
                 ItemTipModuleType.Effect,
-                ItemTipModuleType.Desc/*,
-                ItemTipModuleType.Button*/);
+                ItemTipModuleType.Desc,
+                ItemTipModuleType.Button);
         }
 
         private void RegistModules(ItemTipType tipType, params int[] modules)

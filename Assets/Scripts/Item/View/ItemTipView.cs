@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Core.UI;
 using static Item.Enum.ItemTipModuleType;
 using Item.Control;
+using System.Linq;
 using Item.View.Modules;
 
 namespace Item.View
@@ -17,6 +18,11 @@ namespace Item.View
         }
 
         private List<ItemTipModule> tempModuleList = new List<ItemTipModule>();
+
+        private Dictionary<int, List<ItemTipModule>> hideModuleList = new Dictionary<int, List<ItemTipModule>>();
+
+        [SerializeField]
+        private RectTransform hideRoot;
 
         private BaseItemData itemData;
 
@@ -48,6 +54,7 @@ namespace Item.View
 
             tempModuleList.Clear();
             relayoutStates.Clear();
+            hideModuleList.Clear();
         }
 
         public void SetData(BaseItemData itemData)
@@ -56,12 +63,83 @@ namespace Item.View
             IsActive = true;
             InitRelayoutStates();
 
+            int hideTag = 0;
+            List<int> defaultHideModules = null;
+            if (itemData.tipData.hideTags != null)
+            {
+                defaultHideModules = itemData.tipData.hideTags.ToList();
+                hideTag = defaultHideModules[0];
+            }
+
             for (int i = 0; i < tempModuleList.Count; i++)
             {
                 ItemTipModule module = tempModuleList[i];
+				if (defaultHideModules != null && defaultHideModules.Contains(module.totalModuleType))
+                {
+                    module.hideModuleTag = hideTag;
+                }
                 module.SetData(itemData);
             }
         }
+
+        #region Switch Modules
+
+        public void HideCurrentValidModules(int tag, int[] excludes = null)
+        {
+            HideCurrentValidModules(tag, excludes?.ToList());
+        }
+
+        public void HideCurrentValidModules(int tag, List<int> excludes)
+        {
+            if (!hideModuleList.ContainsKey(tag))
+            {
+                hideModuleList.Add(tag, new List<ItemTipModule>());
+            }
+            hideModuleList[tag].Clear();
+
+            for (int i = 0; i < tempModuleList.Count; i++)
+            {
+                ItemTipModule module = tempModuleList[i];
+                if (module.IsValid)
+                {
+                    if (excludes != null || !excludes.Contains(module.totalModuleType))
+                    {
+                        module.hideModuleTag = tag;
+                        hideModuleList[tag].Add(module);
+                        UIUtils.SetParent(module.transform, hideRoot);
+                    }
+                }
+            }
+        }
+
+        public void ShowTargetVaildModules(int[] moduleTypes)
+        {
+            ShowTargetVaildModules(moduleTypes.ToList());
+        }
+
+        public void ShowTargetVaildModules(List<int> moduleTypes)
+        {
+            for (int i = 0; i < tempModuleList.Count; i++)
+            {
+                ItemTipModule module = tempModuleList[i];
+                if (moduleTypes.Contains(module.totalModuleType))
+                {
+                    if (module.IsValid && module.hideModuleTag != 0)
+                    {
+                        hideModuleList[module.hideModuleTag].Remove(module);
+                        module.hideModuleTag = 0;
+                    }
+                }
+            }
+            for (int i = 0; i < relayoutStates.Count; i++)
+            {
+                relayoutStates[i] = RelayoutState.Ready;
+            }
+            Relayout();
+        }
+
+        #endregion
+
 
         #region Relayout
 
@@ -217,7 +295,7 @@ namespace Item.View
                     }
                     else if (relayoutStates[i] == RelayoutState.Ready)
                     {
-                        if (module.IsValid)
+                        if (module.IsValid && module.hideModuleTag == 0)
                         {
                             module.gameObject.SetActive(true);
                             UIUtils.SetParent(module.transform, root, true);

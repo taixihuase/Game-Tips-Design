@@ -89,6 +89,11 @@ namespace Item.Model
         //标识是否有操作按钮
         public bool canOperate;
 
-        private static Vector2 center = new Vector2(0.5f, 0.5f); 
+        //标识默认隐藏的页签，第一个数字为后续模块的默认hideTag
+        public int[] hideTags = DefaultHideTags1;
+
+        private static Vector2 center = new Vector2(0.5f, 0.5f);
+
+        public static int[] DefaultHideTags1 = new int[] { 2, ItemTipModuleType.Display };
     }
 }
