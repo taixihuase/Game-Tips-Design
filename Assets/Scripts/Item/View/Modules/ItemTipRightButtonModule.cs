@@ -12,7 +12,7 @@ namespace Item.View.Modules
         public override int moduleType => ItemTipModuleType.RightButton;
 
         [SerializeField]
-        private UITable btnTable;
+        private UIGrid btnGrid;
         [SerializeField]
         private Button detailBtn;
         [SerializeField]
@@ -25,9 +25,9 @@ namespace Item.View.Modules
             if (!itemData.tipData.isAdditionalPart)
             {
                 ItemTipType tipType = EnumUtil.GetEnumByDescription<ItemTipType>(itemData.itemRes.type);
-                if (tipType == ItemTipType.Equip || tipType == ItemTipType.Skill)
+                if (tipType == ItemTipType.Equip || tipType == ItemTipType.Skill || tipType == ItemTipType.Mount)
                 {
-                    btnTable.Reposition();
+                    btnGrid.Reposition();
                     IsValid = true;
 
                     detailBtn.onClick.AddListener(OnDetailBtnClick);
@@ -70,6 +70,20 @@ namespace Item.View.Modules
                     ItemTipModuleType.Price,
                     ItemTipModuleType.Button});
             }
+            else if (tipType == ItemTipType.Mount)
+            {
+                parentView?.HideCurrentValidModules(2, new int[] {
+                    ItemTipModuleType.Header,
+                    ItemTipModuleType.RightButton});
+
+                parentView?.ShowTargetVaildModules(new int[] {
+                    ItemTipModuleType.BaseInfo,
+                    ItemTipModuleType.Demand,
+                    ItemTipModuleType.Effect,
+                    ItemTipModuleType.Desc,
+                    ItemTipModuleType.Price,
+                    ItemTipModuleType.Button});
+            }
         }
 
         private void OnDisplayBtnClick()
@@ -85,6 +99,15 @@ namespace Item.View.Modules
                     ItemTipModuleType.Display});
             }
             else if (tipType == ItemTipType.Skill)
+            {
+                parentView?.HideCurrentValidModules(1, new int[] {
+                    ItemTipModuleType.Header,
+                    ItemTipModuleType.RightButton});
+
+                parentView?.ShowTargetVaildModules(new int[] {
+                    ItemTipModuleType.Display});
+            }
+            else if (tipType == ItemTipType.Mount)
             {
                 parentView?.HideCurrentValidModules(1, new int[] {
                     ItemTipModuleType.Header,

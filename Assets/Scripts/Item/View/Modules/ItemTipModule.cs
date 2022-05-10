@@ -51,11 +51,11 @@ namespace Item.View.Modules
         {
             get
             {
-                return hideModuleTag;
+                return _hideModuleTag;
             }
             set
             {
-                hideModuleTag = value;
+                _hideModuleTag = value;
             }
         }
 

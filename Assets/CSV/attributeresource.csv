@@ -15,3 +15,6 @@ int,string,string,int,bool
 4001,FireResistance,火焰抗性,4,TRUE
 4002,IceResistance,寒冰抗性,4,TRUE
 4003,WindResistance,风暴抗性,4,TRUE
+4004,FireDamageRate,火焰伤害,4,TRUE
+4005,IceDamageRate,寒冰伤害,4,TRUE
+4006,WindDamageRate,风暴伤害,4,TRUE

@@ -40,6 +40,7 @@
             switch (moduleType)
             {
                 case Header:
+                case Display:
                     return posType == ModuleLayerType.Top;
                 case Desc:
                 case Price:

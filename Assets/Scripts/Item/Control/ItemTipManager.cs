@@ -87,7 +87,9 @@ namespace Item.Control
                 ItemTipModuleType.Effect,
                 ItemTipModuleType.Desc,
                 ItemTipModuleType.Price,
-                ItemTipModuleType.Button);
+                ItemTipModuleType.Button,
+                ItemTipModuleType.RightButton,
+                ItemTipModuleType.Display);
 
             RegistModules(ItemTipType.Box,
                 ItemTipModuleType.Header,

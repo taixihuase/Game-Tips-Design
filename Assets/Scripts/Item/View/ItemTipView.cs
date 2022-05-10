@@ -102,7 +102,7 @@ namespace Item.View
                 ItemTipModule module = tempModuleList[i];
                 if (module.IsValid)
                 {
-                    if (excludes != null || !excludes.Contains(module.totalModuleType))
+                    if (excludes == null || !excludes.Contains(module.totalModuleType))
                     {
                         module.hideModuleTag = tag;
                         hideModuleList[tag].Add(module);
@@ -131,10 +131,13 @@ namespace Item.View
                     }
                 }
             }
+
+            InitRelayoutStates();
             for (int i = 0; i < relayoutStates.Count; i++)
             {
                 relayoutStates[i] = RelayoutState.Ready;
             }
+            scrollRect.StopMovement();
             Relayout();
         }
 
@@ -173,7 +176,7 @@ namespace Item.View
 
         private const float scrollRectTopSpacing = 4;
         private const float scrollRectBottomSpacing = 4;
-        private const float maxBackgroundHeight = 380;
+        private const float maxBackgroundHeight = 500;
         private const float compareTipSpacingX = 2;
 
         private List<RelayoutState> relayoutStates = new List<RelayoutState>(16);
@@ -207,8 +210,7 @@ namespace Item.View
 
             if (IsActive && tempModuleList.Count > currentRelayoutIndex)
             {
-                ItemTipModule currentModule = tempModuleList[currentRelayoutIndex];
-                if (currentModule == module)
+                if (relayoutStates[currentRelayoutIndex] == RelayoutState.Ready)
                 {
                     Relayout();
                 }

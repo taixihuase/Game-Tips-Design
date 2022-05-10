@@ -74,7 +74,7 @@ namespace Item.View
             var tipData = new ItemTipData();
             itemData.tipData = tipData;
 
-            tipData.pos = new Vector2(100, 250);
+            tipData.pos = new Vector2(0, 400);
             tipData.anchor = Vector2.one;
             tipData.pivot = Vector2.one;
 
@@ -84,7 +84,7 @@ namespace Item.View
             int id = itemData.itemId;
             if (id == 10003)
             {
-                tipData.pos = new Vector2(400, 250);
+                tipData.pos = new Vector2(400, 400);
 
                 idata2 = new BaseItemData(10001, 1);
                 tipData = new ItemTipData();
@@ -110,7 +110,7 @@ namespace Item.View
                 itemData.serverData.itemId = id;
                 itemData.serverData.num = itemData.num;
 
-                itemData.tipData.pos = new Vector2(-600, 250);
+                itemData.tipData.pos = new Vector2(-600, 400);
                 tipData.anchor = Vector2.up;
                 tipData.pivot = Vector2.up;
                 itemData.tipData.canOperate = true;
