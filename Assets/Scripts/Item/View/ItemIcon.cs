@@ -82,16 +82,18 @@ namespace Item.View
             BaseItemData idata3 = null;
 
             int id = itemData.itemId;
-            if (id == 10003)
+            if (id == 10001)
             {
+                itemData.serverData = new AbstractItem();
                 tipData.pos = new Vector2(400, 400);
+                tipData.canOperate = true;
 
-                idata2 = new BaseItemData(10001, 1);
+                idata2 = new BaseItemData(10002, 1);
                 tipData = new ItemTipData();
                 tipData.isCompareLeftPart = true;
                 idata2.tipData = tipData;
 
-                idata3 = new BaseItemData(10002, 1);
+                idata3 = new BaseItemData(10003, 1);
                 tipData = new ItemTipData();
                 tipData.isCompareLeftPart = true;
                 idata3.tipData = tipData;

@@ -20,15 +20,20 @@ namespace Item.Control
             return inst;
         }
 
+        #region Regist
+
         private Dictionary<string, ItemTipType> registedTipTypes = new Dictionary<string, ItemTipType>();
-        private Dictionary<ItemTipType, List<int>> registedTipModules = new Dictionary<ItemTipType, List<int>>();
+        private Dictionary<ItemTipType, int[]> registedTipModules = new Dictionary<ItemTipType, int[]>();
+        private static Dictionary<int, int[]> moduleListDict = new Dictionary<int, int[]>();
         private (BaseItemData it1, BaseItemData it2, BaseItemData it3) itemDatas;
 
         public ItemTipManager()
         {
             RegistTipTypes();
+            CreateDefaultModuleList();
             RegistTipModules();
         }
+
 
         private void RegistTipTypes()
         {
@@ -45,18 +50,22 @@ namespace Item.Control
             registedTipTypes.Add(itemType, tipType);
         }
 
-        private void RegistTipModules()
+        private void CreateDefaultModuleList()
         {
-            RegistModules(ItemTipType.Item,
+            var list = new int[] 
+            {
                 ItemTipModuleType.Header,
                 ItemTipModuleType.BaseInfo,
                 ItemTipModuleType.Demand,
                 ItemTipModuleType.Effect,
                 ItemTipModuleType.Desc,
                 ItemTipModuleType.Price,
-                ItemTipModuleType.Button);
+                ItemTipModuleType.Button
+            };
+            moduleListDict.Add(1, list);
 
-            RegistModules(ItemTipType.Equip,
+            list = new int[]
+            {
                 ItemTipModuleType.Header,
                 ItemTipModuleType.BaseInfo,
                 ItemTipModuleType.Demand,
@@ -66,9 +75,12 @@ namespace Item.Control
                 ItemTipModuleType.Price,
                 ItemTipModuleType.Button,
                 ItemTipModuleType.RightButton,
-                ItemTipModuleType.Display);
+                ItemTipModuleType.Display
+            };
+            moduleListDict.Add(2, list);
 
-            RegistModules(ItemTipType.Skill,
+            list = new int[]
+            {
                 ItemTipModuleType.Header,
                 ItemTipModuleType.BaseInfo,
                 ItemTipModuleType.Demand,
@@ -78,9 +90,12 @@ namespace Item.Control
                 ItemTipModuleType.Price,
                 ItemTipModuleType.Button,
                 ItemTipModuleType.RightButton,
-                ItemTipModuleType.Display);
+                ItemTipModuleType.Display
+            };
+            moduleListDict.Add(3, list);
 
-            RegistModules(ItemTipType.Mount,
+            list = new int[]
+            {
                 ItemTipModuleType.Header,
                 ItemTipModuleType.BaseInfo,
                 ItemTipModuleType.Demand,
@@ -89,9 +104,12 @@ namespace Item.Control
                 ItemTipModuleType.Price,
                 ItemTipModuleType.Button,
                 ItemTipModuleType.RightButton,
-                ItemTipModuleType.Display);
+                ItemTipModuleType.Display
+            };
+            moduleListDict.Add(4, list);
 
-            RegistModules(ItemTipType.Box,
+            list = new int[]
+            {
                 ItemTipModuleType.Header,
                 ItemTipModuleType.BaseInfo,
                 ItemTipModuleType.Demand,
@@ -100,20 +118,42 @@ namespace Item.Control
                 ItemTipModuleType.Effect,
                 ItemTipModuleType.Desc,
                 ItemTipModuleType.Price,
-                ItemTipModuleType.Button);
+                ItemTipModuleType.Button
+            };
+            moduleListDict.Add(5, list);
 
-            RegistModules(ItemTipType.Currency,
+            list = new int[]
+            {
                 ItemTipModuleType.Header,
                 ItemTipModuleType.BaseInfo,
                 ItemTipModuleType.Effect,
                 ItemTipModuleType.Desc,
-                ItemTipModuleType.Button);
+                ItemTipModuleType.Button
+            };
+            moduleListDict.Add(6, list);
         }
 
-        private void RegistModules(ItemTipType tipType, params int[] modules)
+        private void RegistTipModules()
         {
-            registedTipModules.Add(tipType, modules.ToList());
+            RegistModules(ItemTipType.Item, 1);
+
+            RegistModules(ItemTipType.Equip, 2);
+
+            RegistModules(ItemTipType.Skill, 3);
+
+            RegistModules(ItemTipType.Mount, 4);
+
+            RegistModules(ItemTipType.Box, 5);
+
+            RegistModules(ItemTipType.Currency, 6);
         }
+
+        private void RegistModules(ItemTipType tipType, int dictIndex)
+        {
+            registedTipModules.Add(tipType, moduleListDict[dictIndex]);
+        }
+
+        #endregion
 
         public void OpenTipView((BaseItemData it1, BaseItemData it2, BaseItemData it3) itemDatas)
         {
@@ -177,10 +217,10 @@ namespace Item.Control
 
             ItemTipType tipType = GetTipType(itemData);
             ItemTipView tipView = ItemTipPool.Inst().PopTip();
-            List<int> modules;
+            int[] modules;
             if (registedTipModules.TryGetValue(tipType, out modules))
             {
-                for (int i = 0; i < modules.Count; i++)
+                for (int i = 0; i < modules.Length; i++)
                 {
                     int moduleType = modules[i];
                     int subModuleType = moduleType % 100;
