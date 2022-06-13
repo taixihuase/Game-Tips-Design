@@ -103,7 +103,8 @@ namespace Item.View
                 itemData.serverData = new AbstractItem();
                 itemData.serverData.itemId = id;
                 itemData.serverData.num = itemData.num;
-
+                tipData.anchor = new Vector2(1f, 1f);
+                tipData.pivot = new Vector2(0f, 0f);
                 itemData.tipData.canOperate = true;
             }
             if (id == 60001)
@@ -112,9 +113,9 @@ namespace Item.View
                 itemData.serverData.itemId = id;
                 itemData.serverData.num = itemData.num;
 
-                itemData.tipData.pos = new Vector2(-600, 400);
-                tipData.anchor = Vector2.up;
-                tipData.pivot = Vector2.up;
+                itemData.tipData.pos = new Vector2(-600, -100);
+                tipData.anchor = Vector2.zero;
+                tipData.pivot = Vector2.zero;
                 itemData.tipData.canOperate = true;
             }
             if (id == 70002)

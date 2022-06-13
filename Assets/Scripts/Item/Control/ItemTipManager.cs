@@ -136,15 +136,10 @@ namespace Item.Control
         private void RegistTipModules()
         {
             RegistModules(ItemTipType.Item, 1);
-
             RegistModules(ItemTipType.Equip, 2);
-
             RegistModules(ItemTipType.Skill, 3);
-
             RegistModules(ItemTipType.Mount, 4);
-
             RegistModules(ItemTipType.Box, 5);
-
             RegistModules(ItemTipType.Currency, 6);
         }
 

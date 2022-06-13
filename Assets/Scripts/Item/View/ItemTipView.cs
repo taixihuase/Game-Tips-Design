@@ -422,30 +422,26 @@ namespace Item.View
         private void AdjustPos()
         {
             ItemTipData tipData = itemData.tipData;
-            root.localPosition = tipData.pos;
-
+            root.anchoredPosition = tipData.pos;
             background.rectTransform.pivot = tipData.pivot;
-            tempVec3.x = background.rectTransform.rect.width * (tipData.pivot.x - 0.5f);
-            tempVec3.y = background.rectTransform.rect.height * (tipData.pivot.y - 0.5f);
+            background.rectTransform.anchorMin = tipData.anchor;
+            background.rectTransform.anchorMax = tipData.anchor;
 
-            Vector2 anchor = tipData.anchor;
             float bgWidth = background.rectTransform.rect.width;
             float bgHeight = background.rectTransform.rect.height;
-
-            background.rectTransform.anchorMin = anchor;
-            background.rectTransform.anchorMax = anchor;
-            tempVec3.x += bgWidth * (0.5f - anchor.x);
-            tempVec3.y += bgHeight * (0.5f - anchor.y);
-
+            tempVec3.x = bgWidth * (tipData.pivot.x - tipData.anchor.x);
+            tempVec3.y = bgHeight * (tipData.pivot.y - tipData.anchor.y);
             background.rectTransform.anchoredPosition = tempVec3;
 
-            tempVec3 = root.anchoredPosition;
             if (tipData.additionalPartIndex > 0)
             {
+                tempVec3 = root.anchoredPosition;
                 //由原始tip基础上偏移
-                tempVec3.x += tipData.additionalPartIndex * (bgWidth + compareTipSpacingX) * (tipData.isCompareLeftPart ? -1 : 1);
+                tempVec3.x += tipData.additionalPartIndex * 
+                    (bgWidth + compareTipSpacingX) * 
+                    (tipData.isCompareLeftPart ? -1 : 1);
+                root.anchoredPosition = tempVec3;
             }
-            root.anchoredPosition = tempVec3;
         }
 
         #endregion
