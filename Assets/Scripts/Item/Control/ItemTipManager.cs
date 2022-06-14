@@ -158,7 +158,7 @@ namespace Item.Control
 
         public void OpenTipView(BaseItemData itemData1, BaseItemData itemData2 = null, BaseItemData itemData3 = null)
         {
-            itemData1.tipData.isCompare = false;
+            itemData1.tipData.additionalPartIndex = 0;
 
             if (itemData2 != null)
             {
@@ -198,15 +198,14 @@ namespace Item.Control
 
             if (!itemData.tipData.isAdditionalPart)
             {
-                ItemTipPool.Inst().RecycleUsingTips();
+                ItemTipPool.Inst().RecycleAllUsingTips();
             }
             else
             {
-                ItemTipPool.Inst().RecycleUsingTips(itemData.tipData.additionalPartIndex);
-                ItemTipPool.Inst().RecycleUsingTips(itemData.tipData.additionalPartIndex + 1);
+                ItemTipPool.Inst().RecycleUsingTipsFromIndex(itemData.tipData.additionalPartIndex);
             }
-            int usingCnt = ItemTipPool.Inst().GetUsingTipCount();
-            if (usingCnt >= 3)
+            bool full = ItemTipPool.Inst().IsTipsUsingFullUp();
+            if (full)
             {
                 Debug.LogError("已经显示最大数量的tips");
                 return;
@@ -228,6 +227,11 @@ namespace Item.Control
                 }
             }
             tipView.SetData(itemData);
+        }
+
+        public void CloseTipView(int index = 0)
+        {
+            ItemTipPool.Inst().RecycleUsingTipsFromIndex(index);
         }
 
         private ItemTipType GetTipType(BaseItemData itemData)

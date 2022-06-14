@@ -1,4 +1,5 @@
 ﻿using Core.UI;
+using Item.Control;
 using Item.Model;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,6 +45,8 @@ namespace Item.View
         {
             iconGrid.Init("ui/window/itemicon/ui_itemicon.prefab", null);
             iconGrid.SetData(iconDatas);
+
+            ItemTipPool.Inst();
         }
     }
 }

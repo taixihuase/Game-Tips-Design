@@ -23,13 +23,13 @@ namespace Item.Control
         private Transform poolRoot;
 
         private const string tipPath = "ui/window/itemtip/ui_itemtipview.prefab";
-        private const int initialTipCount = 3;
+        private const int initialTipCount = 2;
         private List<ItemTipView> tipPool = new List<ItemTipView>();
 
-        private const int initialModuleCount = 1;
+        private const int initialModuleCount = 2;
         private Dictionary<int, List<ItemTipModule>> modulePool = new Dictionary<int, List<ItemTipModule>>();
         private Dictionary<int, string> modulePrefabPath = new Dictionary<int, string>();
-        private ItemTipView[] usingTips = new ItemTipView[3] { null, null, null };
+        private ItemTipView[] usingTips = new ItemTipView[5] { null, null, null, null, null };
 
 
         public ItemTipPool()
@@ -126,7 +126,7 @@ namespace Item.Control
             return null;
         }
 
-        public int GetUsingTipCount()
+        private int GetUsingTipCount()
         {
             int cnt = 0;
             for (int i = 0; i < usingTips.Length; i++)
@@ -139,15 +139,26 @@ namespace Item.Control
             return cnt;
         }
 
-        public void RecycleUsingTips()
+        public bool IsTipsUsingFullUp()
         {
-            for (int i = 0; i < usingTips.Length; i++)
+            int cnt = GetUsingTipCount();
+            return cnt == usingTips.Length;
+        }
+
+        public void RecycleAllUsingTips()
+        {
+            RecycleUsingTipsFromIndex(0);
+        }
+
+        public void RecycleUsingTipsFromIndex(int idx)
+        {
+            for (int i = idx; i < usingTips.Length; i++)
             {
-                PushTip(usingTips[i]);
+                RecycleUsingTips(i);
             }
         }
 
-        public void RecycleUsingTips(int idx)
+        private void RecycleUsingTips(int idx)
         {
             var tip = GetUsingTip(idx);
             PushTip(tip);

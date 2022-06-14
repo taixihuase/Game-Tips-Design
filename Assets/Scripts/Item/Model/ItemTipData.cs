@@ -91,7 +91,26 @@ namespace Item.Model
             }
         }
 
-        public bool isAdditionalPartAutoLayout = false;
+        //附加tip是否自动布局
+        private bool _isAdditionalPartAutoLayout = false;
+        public bool isAdditionalPartAutoLayout
+        {
+            get { return _isAdditionalPartAutoLayout; }
+            set
+            {
+                _isAdditionalPartAutoLayout = value;
+                if (!value)
+                {
+                    additionalAutoLayoutOffset = 0;
+                }
+                else
+                {
+                    additionalAutoLayoutOffset = additionalPartIndex;
+                }
+            }
+        }
+        //附加tip在自动布局时的偏移倍数
+        public int additionalAutoLayoutOffset = 0;
 
         //标识是否有操作按钮
         public bool canOperate;

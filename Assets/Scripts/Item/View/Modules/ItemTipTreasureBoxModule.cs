@@ -75,11 +75,29 @@ namespace Item.View.Modules
                     {
                         idata.tipData = new ItemTipData();
                     }
-                    idata.tipData.pos = itemData.tipData.pos;
-                    idata.tipData.pivot = itemData.tipData.pivot;
-                    idata.tipData.anchor = itemData.tipData.anchor;
-                    idata.tipData.isAdditionalLeftPart = false;
                     idata.tipData.additionalPartIndex = itemData.tipData.additionalPartIndex + 1;
+                    if (!itemData.tipData.canOperate && itemData.itemId == 60001 && idata.itemId == 60001)
+                    {
+                        if (itemData.tipData.showMask)
+                        {
+                            continue;
+                        }
+                        idata.tipData.pos = new Vector2(-400, 50);
+                        idata.tipData.pivot = Vector2.up;
+                        idata.tipData.anchor = Vector2.up;
+                        idata.tipData.showMask = true;
+                    }
+                    else
+                    {
+                        idata.tipData.pos = itemData.tipData.pos;
+                        idata.tipData.pivot = itemData.tipData.pivot;
+                        idata.tipData.anchor = itemData.tipData.anchor;
+                        idata.tipData.isAdditionalLeftPart = false;
+                        if (itemData.tipData.showMask)
+                        {
+                            idata.tipData.additionalAutoLayoutOffset = idata.tipData.additionalPartIndex - itemData.tipData.additionalPartIndex;
+                        }
+                    }
                     list.Add(idata);
                 }
                 IsValid = true;

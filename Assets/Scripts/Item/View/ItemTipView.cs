@@ -22,6 +22,9 @@ namespace Item.View
         private Dictionary<int, List<ItemTipModule>> hideModuleList = new Dictionary<int, List<ItemTipModule>>();
 
         [SerializeField]
+        private Canvas canvas;
+
+        [SerializeField]
         private RectTransform hideRoot;
 
         private BaseItemData itemData;
@@ -422,6 +425,7 @@ namespace Item.View
         private void AdjustPos()
         {
             ItemTipData tipData = itemData.tipData;
+            canvas.sortingOrder = tipData.additionalPartIndex;
             root.anchoredPosition = tipData.pos;
             background.rectTransform.pivot = tipData.pivot;
             background.rectTransform.anchorMin = tipData.anchor;
@@ -437,9 +441,8 @@ namespace Item.View
             {
                 tempVec3 = root.anchoredPosition;
                 //由原始tip基础上偏移
-                tempVec3.x += tipData.additionalPartIndex * 
-                    (bgWidth + additionalTipSpacingX) * 
-                    (tipData.isAdditionalLeftPart ? -1 : 1);
+                tempVec3.x += tipData.additionalAutoLayoutOffset * 
+                    (bgWidth + additionalTipSpacingX) * (tipData.isAdditionalLeftPart ? -1 : 1);
                 root.anchoredPosition = tempVec3;
             }
         }

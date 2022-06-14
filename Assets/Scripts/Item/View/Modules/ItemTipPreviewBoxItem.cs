@@ -1,12 +1,13 @@
-﻿using Item.Model;
+﻿using Item.Control;
+using UnityEngine.EventSystems;
 
 namespace Item.View.Modules
 {
     public class ItemTipPreviewBoxItem : ItemIcon
     {
-        protected override (BaseItemData, BaseItemData, BaseItemData) GenerateDatas(BaseItemData itemData)
+        public override void OnPointerClick(PointerEventData eventData)
         {
-            return (itemData, null, null);
+            ItemTipManager.Inst().OpenTipView(itemData);
         }
     }
 }

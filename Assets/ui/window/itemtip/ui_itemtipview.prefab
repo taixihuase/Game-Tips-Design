@@ -570,6 +570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 061d9f279fa31ec4bab2ab9be01d79fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 8700371290729017307}
   hideRoot: {fileID: 4855782744423733502}
   root: {fileID: 25925704535607198}
   background: {fileID: 1596848803307726746}

@@ -1,7 +1,5 @@
 ﻿using Item.Control;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Item.View.Modules
@@ -30,7 +28,11 @@ namespace Item.View.Modules
         {
             if (selectToggle.isOn)
             {
-                ItemTipManager.Inst().OpenTipView(GenerateDatas(itemData));
+                ItemTipManager.Inst().OpenTipView(itemData);
+            }
+            else
+            {
+                ItemTipManager.Inst().CloseTipView(itemData.tipData.additionalPartIndex);
             }
         }
 
