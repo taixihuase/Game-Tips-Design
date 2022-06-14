@@ -163,21 +163,25 @@ namespace Item.Control
             if (itemData2 != null)
             {
                 itemData2.tipData.additionalPartIndex = 1;
-                //对比tip以原始tip坐标做偏移
+                //附加tip以原始tip坐标做偏移
                 itemData2.tipData.pos = itemData1.tipData.pos;
                 itemData2.tipData.anchor = itemData1.tipData.anchor;
                 itemData2.tipData.pivot = itemData1.tipData.pivot;
+                //以多参打开tip的方式，附加tip不另外添加遮罩
+                itemData2.tipData.showMask = false;
             }
             
             if (itemData3 != null)
             {
                 itemData3.tipData.additionalPartIndex = 2;
-                //对比tip放在同一侧
+                //附加tip放在同一侧
                 itemData3.tipData.isAdditionalLeftPart = itemData2.tipData.isAdditionalLeftPart;
-                //对比tip以原始tip坐标做偏移
+                //附加tip以原始tip坐标做偏移
                 itemData3.tipData.pos = itemData1.tipData.pos;
                 itemData3.tipData.anchor = itemData1.tipData.anchor;
                 itemData3.tipData.pivot = itemData1.tipData.pivot;
+                //以多参打开tip的方式，附加tip不另外添加遮罩
+                itemData3.tipData.showMask = false;
             }
 
             OpenTipView(itemData1);

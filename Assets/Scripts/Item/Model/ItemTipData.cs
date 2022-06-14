@@ -13,7 +13,26 @@ namespace Item.Model
         //tip背景拉伸时pivot所代表的点固定不动
         public Vector2 pivot = center;
         //是否显示遮罩
-        public bool showMask;
+        private bool _showMask;
+        public bool showMask
+        {
+            get { return _showMask; }
+            set
+            {
+                _showMask = value;
+                if (value)
+                {
+                    isAdditionalPartAutoLayout = false;
+                }
+                else
+                {
+                    if (isAdditionalPart)
+                    {
+                        isAdditionalPartAutoLayout = true;
+                    }
+                }
+            }
+        }
 
         //标识是否同时显示的tip
         private bool _isAdditionalPart;
@@ -25,9 +44,15 @@ namespace Item.Model
                 _isAdditionalPart = value;
                 if (value)
                 {
-                    //附加tip不加遮罩，遮罩由原始tip决定
-                    showMask = false;
                     canOperate = false;
+                    if (showMask)
+                    {
+                        isAdditionalPartAutoLayout = false;
+                    }
+                    else
+                    {
+                        isAdditionalPartAutoLayout = true;
+                    }
                 }
                 else
                 {
@@ -65,6 +90,8 @@ namespace Item.Model
                 _isAdditionalLeftPart = value;
             }
         }
+
+        public bool isAdditionalPartAutoLayout = false;
 
         //标识是否有操作按钮
         public bool canOperate;

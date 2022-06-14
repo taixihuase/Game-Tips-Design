@@ -433,7 +433,7 @@ namespace Item.View
             tempVec3.y = bgHeight * (tipData.pivot.y - tipData.anchor.y);
             background.rectTransform.anchoredPosition = tempVec3;
 
-            if (tipData.additionalPartIndex > 0)
+            if (tipData.additionalPartIndex > 0 && tipData.isAdditionalPartAutoLayout)
             {
                 tempVec3 = root.anchoredPosition;
                 //由原始tip基础上偏移
