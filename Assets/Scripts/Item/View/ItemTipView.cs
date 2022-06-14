@@ -177,7 +177,7 @@ namespace Item.View
         private const float scrollRectTopSpacing = 4;
         private const float scrollRectBottomSpacing = 4;
         private const float maxBackgroundHeight = 500;
-        private const float compareTipSpacingX = 2;
+        private const float additionalTipSpacingX = 2;
 
         private List<RelayoutState> relayoutStates = new List<RelayoutState>(16);
         private Vector3 tempVec3 = new Vector3(0, 0, 0);
@@ -438,8 +438,8 @@ namespace Item.View
                 tempVec3 = root.anchoredPosition;
                 //由原始tip基础上偏移
                 tempVec3.x += tipData.additionalPartIndex * 
-                    (bgWidth + compareTipSpacingX) * 
-                    (tipData.isCompareLeftPart ? -1 : 1);
+                    (bgWidth + additionalTipSpacingX) * 
+                    (tipData.isAdditionalLeftPart ? -1 : 1);
                 root.anchoredPosition = tempVec3;
             }
         }

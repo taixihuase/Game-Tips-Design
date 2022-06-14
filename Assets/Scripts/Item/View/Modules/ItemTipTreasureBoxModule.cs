@@ -78,8 +78,7 @@ namespace Item.View.Modules
                     idata.tipData.pos = itemData.tipData.pos;
                     idata.tipData.pivot = itemData.tipData.pivot;
                     idata.tipData.anchor = itemData.tipData.anchor;
-                    idata.tipData.canOperate = false;
-                    idata.tipData.isCompareLeftPart = false;
+                    idata.tipData.isAdditionalLeftPart = false;
                     idata.tipData.additionalPartIndex = itemData.tipData.additionalPartIndex + 1;
                     list.Add(idata);
                 }

@@ -90,12 +90,11 @@ namespace Item.View
 
                 idata2 = new BaseItemData(10002, 1);
                 tipData = new ItemTipData();
-                tipData.isCompareLeftPart = true;
+                tipData.isAdditionalLeftPart = true;
                 idata2.tipData = tipData;
 
                 idata3 = new BaseItemData(10003, 1);
                 tipData = new ItemTipData();
-                tipData.isCompareLeftPart = true;
                 idata3.tipData = tipData;
             }
             if (id == 20002)

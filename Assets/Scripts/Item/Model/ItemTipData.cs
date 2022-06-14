@@ -15,37 +15,23 @@ namespace Item.Model
         //是否显示遮罩
         public bool showMask;
 
-        //标识是不是对比tip
-        private bool _isCompare;
-        public bool isCompare
+        //标识是否同时显示的tip
+        private bool _isAdditionalPart;
+        public bool isAdditionalPart
         {
-            get { return _isCompare; }
+            get { return _isAdditionalPart; }
             set
             {
-                _isCompare = value;
+                _isAdditionalPart = value;
                 if (value)
                 {
-                    isAdditionalPart = true;
+                    //附加tip不加遮罩，遮罩由原始tip决定
+                    showMask = false;
                     canOperate = false;
                 }
                 else
                 {
-                    isCompareLeftPart = false;
-                }
-            }
-        }
-
-        //标识对比tip是否在左边
-        private bool _isCompareLeftPart;
-        public bool isCompareLeftPart
-        {
-            get { return _isCompareLeftPart; }
-            set
-            {
-                _isCompareLeftPart = value;
-                if (value)
-                {
-                    isCompare = true;
+                    isAdditionalLeftPart = false;
                 }
             }
         }
@@ -65,24 +51,18 @@ namespace Item.Model
                 else
                 {
                     isAdditionalPart = false;
-                    isCompare = false;
                 }
             }
         }
 
-        //标识是否同时显示的tip
-        private bool _isAdditionalPart;
-        public bool isAdditionalPart
+        //标识附加tip是否在左边
+        private bool _isAdditionalLeftPart;
+        public bool isAdditionalLeftPart
         {
-            get { return _isAdditionalPart; }
+            get { return _isAdditionalLeftPart; }
             set
             {
-                _isAdditionalPart = value;
-                if (value)
-                {
-                    //附加tip不加遮罩，遮罩由原始tip决定
-                    showMask = false;
-                }
+                _isAdditionalLeftPart = value;
             }
         }
 
