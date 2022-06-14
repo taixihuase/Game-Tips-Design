@@ -255,6 +255,8 @@ namespace Item.View
             float moduleSize;
             Transform root;
             ref float offset = ref topRelayoutOffset;
+
+            //标志排版方向是从上到下还是从下到上
             float sign = layer == ModuleLayerType.Right ? 1 : -1;
 
             tempVec3.x = 0;
@@ -305,12 +307,15 @@ namespace Item.View
                             module.gameObject.SetActive(true);
                             UIUtils.SetParent(module.transform, root, true);
 
+                            //获取该模块与上一模块的间距
                             spacing = module.GetModuleSpacing(lastModuleType, lastModuleSubType);
                             tempVec3.y += sign * spacing;
                             module.rectTransform.anchorMin = anchorVec2;
                             module.rectTransform.anchorMax = anchorVec2;
                             module.rectTransform.pivot = anchorVec2;
                             module.transform.localPosition = tempVec3;
+
+                            //调用模块内部组件自动排版并获取模块大小
                             moduleSize = module.Relayout();
                             tempVec3.y += sign * moduleSize;
 
@@ -360,7 +365,8 @@ namespace Item.View
             if (middleCnt > 0)
             {
                 //找到一个滚动区域的有效模块
-                midModule = FindFirstValidModuleWithinRange(currentRelayoutIndex - bottomCnt - 1, currentRelayoutIndex - bottomCnt - middleCnt);
+                midModule = FindFirstValidModuleWithinRange(
+                    currentRelayoutIndex - bottomCnt - 1, currentRelayoutIndex - bottomCnt - middleCnt);
                 if (midModule != null)
                 {
                     totalSize += middleRelayoutOffset + scrollRectTopSpacing;
@@ -371,7 +377,8 @@ namespace Item.View
             if (bottomCnt > 0)
             {
                 //找到底部区域最后一个有效模块
-                bottomModule = FindFirstValidModuleWithinRange(currentRelayoutIndex - 1, currentRelayoutIndex - bottomCnt);
+                bottomModule = FindFirstValidModuleWithinRange(
+                    currentRelayoutIndex - 1, currentRelayoutIndex - bottomCnt);
                 if (bottomModule != null)
                 {
                     totalSize += bottomRelayoutOffset;
