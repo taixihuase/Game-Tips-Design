@@ -27,6 +27,8 @@ namespace Item.View
         [SerializeField]
         private RectTransform hideRoot;
 
+        private EventTriggerListener maskTrigger;
+
         private BaseItemData itemData;
 
         public BaseItemData GetItemData()
@@ -45,6 +47,11 @@ namespace Item.View
             IsActive = false;
             itemData = null;
             ReleaseModules();
+
+            if (maskTrigger != null)
+            {
+                maskTrigger.onClick -= OnMaskClick;
+            }
         }
 
         private void ReleaseModules()
@@ -65,6 +72,14 @@ namespace Item.View
             this.itemData = itemData;
             IsActive = true;
             InitRelayoutStates();
+
+            mask.gameObject.SetActive(itemData.tipData.showMask);
+            if (maskTrigger == null)
+            {
+                maskTrigger = mask.GetComponent<EventTriggerListener>();
+            }
+
+            maskTrigger.onClick += OnMaskClick;
 
             int hideTag = 0;
             List<int> defaultHideModules = null;
@@ -158,6 +173,8 @@ namespace Item.View
 
         [SerializeField]
         private RectTransform root;
+        [SerializeField]
+        private RectTransform mask;
         [SerializeField]
         private Image background;
         [SerializeField]
@@ -452,6 +469,11 @@ namespace Item.View
                     (bgWidth + additionalTipSpacingX) * (tipData.isAdditionalLeftPart ? -1 : 1);
                 root.anchoredPosition = tempVec3;
             }
+        }
+
+        private void OnMaskClick(GameObject go)
+        {
+            ItemTipManager.Inst().CloseTipView(itemData.tipData.additionalPartIndex);
         }
 
         #endregion

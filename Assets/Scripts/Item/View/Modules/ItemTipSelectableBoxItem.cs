@@ -1,5 +1,6 @@
 ﻿using Item.Control;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Item.View.Modules
@@ -34,6 +35,11 @@ namespace Item.View.Modules
             {
                 ItemTipManager.Inst().CloseTipView(itemData.tipData.additionalPartIndex);
             }
+        }
+
+        public override void OnPointerClick(PointerEventData eventData)
+        {
+            selectToggle.isOn = !selectToggle.isOn;
         }
 
         public override void Clear()
