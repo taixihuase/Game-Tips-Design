@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Cysharp.Threading.Tasks;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,7 +25,7 @@ namespace Core.UI
         private int itemPrefabPathHash = 0;
 
         private Coroutine createCoroutine = null;
-        private int maxCreateItemNumPerFrame = 20;
+        private int maxCreateItemNumPerFrame = 10;
 
         private RectTransform rectTransform = null;
 
@@ -78,7 +79,7 @@ namespace Core.UI
             onReposition?.Invoke();
         }
 
-        public void SetMaxCreateItemNumPerFrame(int num = 20)
+        public void SetMaxCreateItemNumPerFrame(int num = 10)
         {
             maxCreateItemNumPerFrame = num;
         }
@@ -96,7 +97,7 @@ namespace Core.UI
             var itemList = itemPool[itemPrefabPathHash];
             if (itemList.Count < datas.Count)
             {
-                createCoroutine = parent.StartCoroutine(CreateItems());
+                CreateItems();
             }
             else
             {
@@ -104,7 +105,7 @@ namespace Core.UI
             }
         }
 
-        IEnumerator CreateItems()
+        async void CreateItems()
         {
             var itemList = itemPool[itemPrefabPathHash];
             GameObject asset = AssetLoader.LoadAsset<GameObject>(itemPrefabPath);
@@ -112,7 +113,8 @@ namespace Core.UI
             {
                 int count = ItemDatas.Count - itemList.Count;
                 int i = 0;
-                while(i < count)
+
+                while (i < count)
                 {
                     GameObject go = GameObject.Instantiate(asset);
                     UIUtils.SetParent(go.transform, poolRootObj.transform, true);
@@ -122,14 +124,12 @@ namespace Core.UI
                     i++;
                     if (i % maxCreateItemNumPerFrame == 0)
                     {
-                        yield return new WaitForEndOfFrame();
+                        await UniTask.NextFrame();
                     }
                 }
 
                 PopItems();
             }
-
-            yield return null;
         }
 
         private void PopItems()

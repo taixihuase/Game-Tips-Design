@@ -44,6 +44,7 @@ namespace Item.View
         private void Start()
         {
             iconGrid.Init("ui/window/itemicon/ui_itemicon.prefab", null);
+            iconGrid.SetMaxCreateItemNumPerFrame(5);
             iconGrid.SetData(iconDatas);
 
             ItemTipPool.Inst();
