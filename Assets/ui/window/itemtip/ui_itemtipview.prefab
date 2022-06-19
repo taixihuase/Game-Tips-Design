@@ -118,7 +118,7 @@ MonoBehaviour:
   canvas: {fileID: 2213637633273482445}
   hideRoot: {fileID: 2695037726604016616}
   root: {fileID: 7375098965470913672}
-  mask: {fileID: 2145255750303687396}
+  mask: {fileID: 6483281006664422496}
   background: {fileID: 8083015355665024140}
   topContentRoot: {fileID: 4327560030653852095}
   bottomContentRoot: {fileID: 5963071005677008357}

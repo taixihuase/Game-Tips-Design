@@ -73,12 +73,13 @@ namespace Item.View
             IsActive = true;
             InitRelayoutStates();
 
-            mask.gameObject.SetActive(itemData.tipData.showMask);
+            mask.gameObject.SetActive(itemData.tipData.showMask || itemData.tipData.additionalPartIndex == 0);
+            mask.color = itemData.tipData.showMask ? maskColor : Color.clear;
             if (maskTrigger == null)
             {
                 maskTrigger = mask.GetComponent<EventTriggerListener>();
             }
-
+            maskTrigger.isThrough = itemData.tipData.additionalPartIndex == 0;
             maskTrigger.onClick += OnMaskClick;
 
             int hideTag = 0;
@@ -174,7 +175,7 @@ namespace Item.View
         [SerializeField]
         private RectTransform root;
         [SerializeField]
-        private RectTransform mask;
+        private Image mask;
         [SerializeField]
         private Image background;
         [SerializeField]
@@ -202,6 +203,8 @@ namespace Item.View
         private List<RelayoutState> relayoutStates = new List<RelayoutState>(16);
         private Vector3 tempVec3 = new Vector3(0, 0, 0);
         private Vector2 anchorVec2 = new Vector2(0, 0);
+
+        private Color maskColor = new Color(1, 1, 1, 0.7f);
 
         private void InitRelayoutStates()
         {
